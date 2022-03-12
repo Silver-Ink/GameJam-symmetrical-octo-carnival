@@ -10,7 +10,7 @@ CAM_SCALE = 1
 
 -- CLASSES 
 local Ccarte = require("carte")
-local scene = require("reseau")
+local scene = require("reseau") --require("game")
 local rect = require("rectangle")
 local mouse = require("mouse")
 
@@ -25,7 +25,7 @@ function love.load()
   FSTYPE = {resizable=false, fullscreen = FULLSCREEN, vsync=true, minwidth=WIDTH/2, minheight=HEIGHT/2}
   love.window.setMode(WIDTH, HEIGHT, FSTYPE)
 
-  Img = love.graphics.newImage("Content/sus.png")
+  ImgThomasDP = love.graphics.newImage("Content/sus.png")
 
   carte = Ccarte.Create()
   require("font").load()
@@ -47,16 +47,15 @@ function love.draw()
   CAM_SCALE = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
   love.graphics.scale(CAM_SCALE, CAM_SCALE)
 
-  love.graphics.draw(Img)
-  love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
-  love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
-  love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
-  love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
+  --love.graphics.draw(ImgThomasDP)
+  love.graphics.print("Main.lua",    10, 10, 0, FONT_BIG)
+  --love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
+  --love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
+  --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
+  --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 
-  
   scene.draw()
   Ccarte.Draw(carte)
-
 end
 
 function love.keypressed(key, scancode, isrepeat)

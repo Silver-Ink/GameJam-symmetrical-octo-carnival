@@ -3,10 +3,16 @@ local mouse = {}
 MOUSE_X = 0
 MOUSE_Y = 0
 
+OLD_MOUSE_X = 0
+OLD_MOUSE_Y = 0
+
 MOUSE_IS_PRESS  = false
 MOUSE_WAS_PRESS = false
 
 mouse.update =  function()
+  OLD_MOUSE_X = MOUSE_X
+  OLD_MOUSE_Y = MOUSE_Y
+
   MOUSE_X = love.mouse.getX() / CAM_SCALE
   MOUSE_Y = love.mouse.getY() / CAM_SCALE
 
