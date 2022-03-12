@@ -16,6 +16,8 @@ mapLoader.load = function (game)
 
     end
   end
+
+  game.create(require("element.stickmanInit"), {x=3, y=3})
 end
 
 return mapLoader

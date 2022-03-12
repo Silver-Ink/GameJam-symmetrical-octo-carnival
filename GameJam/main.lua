@@ -30,6 +30,7 @@ function love.load()
   carte = Ccarte.Create()
   require("font").load()
   scene.load()
+  scene.initDefaultLevel()
 end
 
 function love.update(dt)

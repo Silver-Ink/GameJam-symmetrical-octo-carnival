@@ -20,12 +20,21 @@ game.load = function()
   for i = 1, game.MAX_ELEMENT do
     game.elementBuilder.reset(game.elements[i])
   end
+end
 
+game.initDefaultLevel = function ()
   require("element.mapLoader").load(game)
 end
 
 game.update = function(dt)
 
+  for i = 1, game.MAX_ELEMENT do
+    local e = game.elements[i]
+    if(e.isUsed and e.update ~= nil) then
+      e.update(e)
+    end
+  end
+  --[[
   local camSpeed =  1/16
   if love.keyboard.isDown("right") then
     game.camX = game.camX - camSpeed
@@ -39,7 +48,7 @@ game.update = function(dt)
   end
   if love.keyboard.isDown("down") then
     game.camY = game.camY - camSpeed
-  end
+  end]]
 
 end
 
