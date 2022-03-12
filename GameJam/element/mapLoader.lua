@@ -12,7 +12,7 @@ mapLoader.load = function (game)
         drawMethod = require("element.tileDraw2")
       end]]
 
-      game.create(t, {x=x, y=y, name="grass.png"}, nil, drawMethod)
+      game.create(t, {x=x, y=y, name="grass.png"}, nil, nil)
 
     end
   end
