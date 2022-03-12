@@ -4,14 +4,12 @@ local entity = {}
 local rect = require("../rectangle")
 local color = require("../color")
 
-local dumbid = 0
-
-entity.create = function ()
-   local e = { hitbox = rect.create(0, 0, 1, 1) }
-   e.sprite = nil
-   dumbid = dumbid+1
-   e.index = dumbid
-   return e
+entity.game_true_create_do_not_use = function (index)
+  local e = { hitbox = rect.create(0, 0, 1, 1) }
+  e.sprite = nil
+  e.index = index
+  e.isUsed = false
+  return e
 end
 
 function entity:draw()
