@@ -1,12 +1,22 @@
 --love.graphics.setDefaultFilter("nearest") -- pas d'aliasing pour la 2D old scool
 
+WIDTH  = 1
+HEIGHT = 1
 
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
-  local scaleDiv = 2
-  love.window.setMode(1920 / scaleDiv, 1080 / scaleDiv)
-  WIDTH  = love.graphics.getWidth()
-  HEIGHT = love.graphics.getHeight()
+  WIDTH  = 960 --love.graphics.getWidth()
+  HEIGHT = 540 --love.graphics.getHeight()
+  FULLSCREEN = false
+  FSTYPE = {resizable=false, fullscreen = FULLSCREEN, vsync=true, minwidth=WIDTH/2, minheight=HEIGHT/2}
+  love.window.setMode(WIDTH, HEIGHT, FSTYPE)
+
+  --love.window.setFullscreen(true, "desktop")
+  --love.graphics.setPointSize(2) --scale by a factor of 2
+
+  --local flags = { fullscreen  = true}
+  --love.window.setMode(960, 540, flags)
+  --love.graphics.setMode( 960, 540, true)
 
   Img = love.graphics.newImage("Content/sus.png")
   require("font").load()
@@ -19,13 +29,19 @@ function love.update(dt)
 end
 
 function love.draw()
+  local scale = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
+  love.graphics.scale(scale, scale)
+
   love.graphics.draw(Img)
   love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 end
 
-function love.keypressed(key)
-  if key=="escape" then love.event.quit() end
-  print(key)
+function love.keypressed(key, scancode, isrepeat)
+  if key == "escape" then love.event.quit()
+  elseif key == "f11" then
+    FULLSCREEN = not FULLSCREEN
+		love.window.setFullscreen(FULLSCREEN)
+	end
 end
