@@ -3,6 +3,11 @@
 WIDTH  = 1
 HEIGHT = 1
 
+local Ccarte = require("carte")
+
+
+local carte
+time = 0
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
   WIDTH  = 960 --love.graphics.getWidth()
@@ -12,6 +17,10 @@ function love.load()
   love.window.setMode(WIDTH, HEIGHT, FSTYPE)
 
   Img = love.graphics.newImage("Content/sus.png")
+
+  carte = Ccarte.Create()
+  Ccarte.Stroke(carte)
+  Ccarte.Stroke(carte)
   require("font").load()
 end
 
@@ -19,6 +28,7 @@ function love.update(dt)
   --print("dt : "..dt)
   --table.insert(t, 1)
   --Img:getWidth()
+  time = time + dt
 end
 
 function love.draw()
@@ -30,6 +40,8 @@ function love.draw()
   love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
+
+  Ccarte.Draw(carte)
 end
 
 function love.keypressed(key, scancode, isrepeat)
