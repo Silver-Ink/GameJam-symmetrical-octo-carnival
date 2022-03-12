@@ -3,6 +3,12 @@
 WIDTH  = 1
 HEIGHT = 1
 
+CAM_SCALE = 1
+
+local scene = require("reseau")
+local rect = require("rectangle")
+local mouse = require("mouse")
+
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
   WIDTH  = 960 --love.graphics.getWidth()
@@ -13,23 +19,33 @@ function love.load()
 
   Img = love.graphics.newImage("Content/sus.png")
   require("font").load()
+  scene.load()
 end
 
 function love.update(dt)
+  mouse.update()
+  scene.update(dt)
+
   --print("dt : "..dt)
   --table.insert(t, 1)
   --Img:getWidth()
 end
 
 function love.draw()
-  local scale = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
-  love.graphics.scale(scale, scale)
+  CAM_SCALE = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
+  love.graphics.scale(CAM_SCALE, CAM_SCALE)
 
   love.graphics.draw(Img)
   love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
   love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
+  
+  scene.draw()
+
+
+  --local r = rect.create(128, 0, 64, 32)
+  --rect.draw(r)
 end
 
 function love.keypressed(key, scancode, isrepeat)
