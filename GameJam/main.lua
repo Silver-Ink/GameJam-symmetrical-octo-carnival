@@ -10,9 +10,9 @@ CAM_SCALE = 1
 
 -- CLASSES 
 local Ccarte = require("carte")
-local scene = require("reseau") --require("game")
-local rect = require("rectangle")
-local mouse = require("mouse")
+local scene  = require("reseau") --require("game")
+local rect   = require("rectangle")
+local mouse  = require("mouse")
 
 -- INSTANCES
 local carte

@@ -9,7 +9,7 @@ game.load = function()
   game.MAX_ENTITY = 1000
 
   for i = 1, game.MAX_ENTITY do
-    --game.entities[i] = cre
+    game.entities[i] = game.entityBuilder.game_true_create_do_not_use(i)
   end
 
   local test = game.entityBuilder.create()
@@ -20,6 +20,10 @@ end
 
 game.update = function(dt)
 
+end
+
+game.create = function ()
+  --entity.create = function ()
 end
 
 game.draw = function()
