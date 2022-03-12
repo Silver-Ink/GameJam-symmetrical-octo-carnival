@@ -1,8 +1,8 @@
-function connect()
+local function connect()
 
-    local myNumber
+    MachineID = -1
     local nbPlayer
-    local host, port = "localhost", 4242
+    local host, port = "192.168.43.227", 4242 --"localhost", 4242
     local socket = require("socket")
     local tcp = assert(socket.tcp())
   
@@ -12,7 +12,7 @@ function connect()
     tcp:send(pseudo .. "\n");
 
     local s, status, partial = tcp:receive()
-    myNumber = s
+    MachineID = s
     nbPlayer = s
 
     while true do
@@ -20,7 +20,7 @@ function connect()
         
         if s == "New player" then
             nbPlayer = nbPlayer + 1
-            print("Il y a " .. nbPlayer .. " joueur d'apres" .. myNumber)
+            print("Il y a " .. nbPlayer .. " joueur d'apres" .. MachineID)
         end
 
         --print(s or partial .. " + recu du serveur\n")

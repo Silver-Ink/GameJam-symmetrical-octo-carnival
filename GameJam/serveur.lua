@@ -1,4 +1,4 @@
-function openConnect()
+function OpenConnect()
 
     local lst_client = {}
 
@@ -60,4 +60,4 @@ function openConnect()
     end
 end
 
-openConnect()
+OpenConnect()
