@@ -14,7 +14,7 @@ carte.Stroke = function(pCarte)
   love.graphics.setCanvas(pCarte.image)
   love.graphics.setPointSize(5)
   love.graphics.setColor(0, 0, 0)
-  love.graphics.line(MOUSE_X, MOUSE_Y)--, OLD_MOUSE_X, OLD_MOUSE_Y)
+  love.graphics.line(MOUSE_X, MOUSE_Y, OLD_MOUSE_X, OLD_MOUSE_Y)
   love.graphics.setColor(1, 1, 1)
   print("ok")
 

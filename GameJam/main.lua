@@ -35,7 +35,9 @@ end
 function love.update(dt)
   mouse.update()
   scene.update(dt)
-  Ccarte.Update(carte)
+  if love.keyboard.isDown("m") then
+    Ccarte.Update(carte)
+  end
 
   --print("dt : "..dt)
   --table.insert(t, 1)
@@ -55,7 +57,9 @@ function love.draw()
   --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 
   scene.draw()
-  Ccarte.Draw(carte)
+  if love.keyboard.isDown("m") then
+    Ccarte.Draw(carte)
+  end
 end
 
 function love.keypressed(key, scancode, isrepeat)
