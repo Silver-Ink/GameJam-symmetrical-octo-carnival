@@ -1,10 +1,16 @@
 local game = {}
 
-game.entityBuilder = require("element.entity")
-game.entities = {}
+local rect = require("rectangle")
+local sprite = require("sprite")
 
 game.load = function()
+  game.entityBuilder = require("element.entity")
+  game.entities = {}
 
+  local test = game.entityBuilder.create()
+  test.hitbox = rect.create(0, 0, 64, 64)
+  test.sprite = sprite.create("Content/grass.png")
+  table.insert(game.entities, test)
 end
 
 game.update = function(dt)
@@ -17,7 +23,9 @@ game.draw = function()
 
   for i = 1, #game.entities do
     local e = game.entities[i]
-    e.draw()
+    print(e)
+    print(e.id)
+    game.entityBuilder.draw(e)
   end
   --love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
