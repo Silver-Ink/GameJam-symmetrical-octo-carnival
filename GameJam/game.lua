@@ -6,6 +6,11 @@ local sprite = require("sprite")
 game.load = function()
   game.entityBuilder = require("element.entity")
   game.entities = {}
+  game.MAX_ENTITY = 1000
+
+  for i = 1, game.MAX_ENTITY do
+    --game.entities[i] = cre
+  end
 
   local test = game.entityBuilder.create()
   test.hitbox = rect.create(0, 0, 64, 64)
