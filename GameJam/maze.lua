@@ -3,14 +3,14 @@ local mazeGenerator = {}
 mazeGenerator.grid = {}
 mazeGenerator.numberOfColumns = 0
 mazeGenerator.numberOfRows = 0
-mazeGenerator.cells = 5 *3
-mazeGenerator.explored = 0
-mazeGenerator.seed = os.clock()
+local cells = 5 *3
+local explored = 0
+local seed = os.clock()
 mazeGenerator.SpawningAreaTop = 0
 mazeGenerator.SpawningAreaLeft = 0
 mazeGenerator.SpawningAreaSize = 4 * 3  --doit etre un multiple de 4
-mazeGenerator.maxNumberOfTriesForDoorsBySide = 20
-mazeGenerator.extendFactor = 0.5
+local maxNumberOfTriesForDoorsBySide = 20
+local extendFactor = 0.5
 
 
 
@@ -76,10 +76,10 @@ function mazeGenerator.DigWallAt(row, column)
   
   function mazeGenerator.Explore(row, column)
     mazeGenerator.DigWallAt(row, column)
-    mazeGenerator.explored = mazeGenerator.explored + 1
+    explored = explored + 1
   
     
-    while mazeGenerator.explored < math.floor((mazeGenerator.numberOfRows*mazeGenerator.numberOfColumns) / 2) do
+    while explored < math.floor((mazeGenerator.numberOfRows*mazeGenerator.numberOfColumns) / 2) do
       local dirs = mazeGenerator.GetAvailableDirections(row, column)
       if #dirs ~= 0 then
         local r = love.math.random(1, #dirs)
@@ -112,15 +112,15 @@ function mazeGenerator.DigWallAt(row, column)
   end
   
   function mazeGenerator.GetRowIndex(x)
-    return math.floor(x / mazeGenerator.cells)
+    return math.floor(x / cells)
   end
   
   function mazeGenerator.GetColumnIndex(y)
-    return math.floor(y / mazeGenerator.cells)
+    return math.floor(y / cells)
   end
   
   function mazeGenerator.GenerateSpawningAreaDoorsToTheLeft()
-    for i = 1, mazeGenerator.maxNumberOfTriesForDoorsBySide do
+    for i = 1, maxNumberOfTriesForDoorsBySide do
       local row = love.math.random(mazeGenerator.SpawningAreaTop + 1, mazeGenerator.SpawningAreaTop + mazeGenerator.SpawningAreaSize - 1)
   
       local possible = true
@@ -228,21 +228,21 @@ function mazeGenerator.DigWallAt(row, column)
   
   function mazeGenerator.Initialize()
     --fixe la seed rnd
-    love.math.setRandomSeed(mazeGenerator.seed)
+    love.math.setRandomSeed(seed)
     
     mazeGenerator.grid = {}
-    mazeGenerator.explored = 0
+    explored = 0
     
-    mazeGenerator.numberOfColumns = math.floor(WIDTH / mazeGenerator.cells)
-    mazeGenerator.numberOfRows = math.floor(HEIGHT / mazeGenerator.cells)
+    mazeGenerator.numberOfColumns = math.floor(WIDTH / cells)
+    mazeGenerator.numberOfRows = math.floor(HEIGHT / cells)
   
     mazeGenerator.SpawningAreaLeft = mazeGenerator.GetColumnIndex(math.floor(WIDTH / 2)) - math.floor(mazeGenerator.SpawningAreaSize / 2)
     mazeGenerator.SpawningAreaTop = mazeGenerator.GetRowIndex(math.floor(HEIGHT / 2)) - math.floor(mazeGenerator.SpawningAreaSize / 2)
     
     --Generate exitBoundary specificities
-    mazeGenerator.topExitBoundary = mazeGenerator.SpawningAreaTop - mazeGenerator.SpawningAreaSize * mazeGenerator.extendFactor
-    mazeGenerator.leftExitBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * mazeGenerator.extendFactor
-    mazeGenerator.exitBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *mazeGenerator.extendFactor)
+    mazeGenerator.topExitBoundary = mazeGenerator.SpawningAreaTop - mazeGenerator.SpawningAreaSize * extendFactor
+    mazeGenerator.leftExitBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * extendFactor
+    mazeGenerator.exitBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *extendFactor)
     
     --fill the grid 
     mazeGenerator.InitGrid()
