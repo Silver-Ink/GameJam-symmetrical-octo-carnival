@@ -1,6 +1,6 @@
 love.graphics.setDefaultFilter("nearest") -- pas d'aliasing pour la 2D old scool
 
-
+local test = require("extern")
 
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
@@ -9,6 +9,10 @@ function love.load()
   WIDTH = love.graphics.getWidth()
   HEIGHT = love.graphics.getHeight()
   Img = love.graphics.newImage("Content/sus.png")
+
+  local f = love.graphics.newFont("Content/JosefinSans-Regular.ttf", HEIGHT/10)
+	love.graphics.setFont(f)
+  test.test(42)
 end
 
 function love.update(dt)
@@ -20,7 +24,7 @@ end
 
 function love.draw()
   love.graphics.draw(Img)
-  love.graphics.print("Hello World", 400, 300, 0, 4, 4)
+  love.graphics.print("Hello World", 400, 300, 0.2, 0.5)
 end
 
 function love.keypressed(key)
