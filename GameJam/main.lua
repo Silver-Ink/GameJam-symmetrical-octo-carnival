@@ -10,7 +10,7 @@ CAM_SCALE = 1
 
 -- CLASSES 
 local Ccarte = require("carte")
-local scene = require("reseau") --require("game")
+local scene = require("reseau") --require("game") --
 local rect = require("rectangle")
 local mouse = require("mouse")
 
@@ -35,6 +35,7 @@ end
 function love.update(dt)
   mouse.update()
   scene.update(dt)
+
   if love.keyboard.isDown("m") then
     Ccarte.Update(carte)
   end
@@ -50,16 +51,17 @@ function love.draw()
   love.graphics.scale(CAM_SCALE, CAM_SCALE)
 
   --love.graphics.draw(ImgThomasDP)
-  love.graphics.print("Main.lua",    10, 10, 0, FONT_BIG)
+  --love.graphics.print("Main.lua",    10, 10, 0, FONT_BIG)
   --love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
   --love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 
   scene.draw()
+
   if love.keyboard.isDown("m") then
-    Ccarte.Draw(carte)
-  end
+      Ccarte.Draw(carte)
+    end
 end
 
 function love.keypressed(key, scancode, isrepeat)
