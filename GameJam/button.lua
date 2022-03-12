@@ -4,9 +4,9 @@ local button = {}
 local rect = require("rectangle")
 local color = require("color")
 
-button.create = function(rectangle, color)
+button.create = function(rectangle, color, txt)
   color = color or color.white
-  local b = { hitbox = rectangle, color= color, colorDisplay = color}
+  local b = { hitbox = rectangle, color= color, colorDisplay = color, txt = txt or "" }
   return b
 end
 
@@ -23,6 +23,7 @@ function button:draw()
   color.apply(self.colorDisplay)
   rect.draw(self.hitbox)
   color.apply(color.white)
+  love.graphics.print(self.txt, self.hitbox.x+self.hitbox.w/2, self.hitbox.y+self.hitbox.h/2, 0, FONT_BIG, FONT_BIG, self.hitbox.w/2, self.hitbox.h/2)
 end
 
 function button:isHover() -- css vibe

@@ -2,8 +2,8 @@ return function (elem)
 
   --print("mid"..elem.mid)
   --print("MID"..MID)
-
-  if((elem.mid or -1) == MID) then
+  --(elem.mid or -1)
+  if(elem.mid == MID) then
     local camSpeed =  1/16
     if love.keyboard.isDown("right") then
       elem.hitbox.x = elem.hitbox.x + camSpeed
