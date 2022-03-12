@@ -11,13 +11,6 @@ function love.load()
   FSTYPE = {resizable=false, fullscreen = FULLSCREEN, vsync=true, minwidth=WIDTH/2, minheight=HEIGHT/2}
   love.window.setMode(WIDTH, HEIGHT, FSTYPE)
 
-  --love.window.setFullscreen(true, "desktop")
-  --love.graphics.setPointSize(2) --scale by a factor of 2
-
-  --local flags = { fullscreen  = true}
-  --love.window.setMode(960, 540, flags)
-  --love.graphics.setMode( 960, 540, true)
-
   Img = love.graphics.newImage("Content/sus.png")
   require("font").load()
 end
@@ -33,6 +26,7 @@ function love.draw()
   love.graphics.scale(scale, scale)
 
   love.graphics.draw(Img)
+  love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
   love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
