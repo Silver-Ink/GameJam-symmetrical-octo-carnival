@@ -1,10 +1,7 @@
 local carte = {}
 
-
-
-
-function carte:Clear()
-  love.graphics.setCanvas(self.image)
+carte.Clear = function(pCarte)
+  love.graphics.setCanvas(pCarte.image)
 
   love.graphics.clear(1, 1, 1, 0)
   love.graphics.draw(love.graphics.newImage("Content/carteBG.png"))
@@ -12,25 +9,31 @@ function carte:Clear()
   love.graphics.setCanvas()
 end
 
-function carte:Stroke()
+carte.Stroke = function(pCarte)
 
-  love.graphics.setCanvas(self.image)
+  love.graphics.setCanvas(pCarte.image)
   love.graphics.setPointSize(5)
-  love.graphics.point(MOUSE_X, MOUSE_Y)
-  
+  love.graphics.setColor(0, 0, 0)
+  love.graphics.line(MOUSE_X, MOUSE_Y)--, OLD_MOUSE_X, OLD_MOUSE_Y)
+  love.graphics.setColor(1, 1, 1)
+  print("ok")
+
 
   love.graphics.setCanvas()
   
 end
 
-function carte:Update()
+carte.Update = function(pCarte)
   if love.mouse.isDown(1) then
-    self.Stroke()
+    carte.Stroke(pCarte)
+  end
+  if love.keyboard.isDown("p") then
+    carte.Clear(pCarte)
   end
 end
 
-function carte:Draw()
-  love.graphics.draw(self.image, 100, 100)
+carte.Draw = function(pCarte)
+  love.graphics.draw(pCarte.image, 0, 0)
 end
 
 carte.Create = function ()

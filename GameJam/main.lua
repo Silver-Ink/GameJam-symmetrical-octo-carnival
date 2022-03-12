@@ -28,8 +28,6 @@ function love.load()
   Img = love.graphics.newImage("Content/sus.png")
 
   carte = Ccarte.Create()
-  Ccarte.Stroke(carte)
-  Ccarte.Stroke(carte)
   require("font").load()
   scene.load()
 end
@@ -37,6 +35,7 @@ end
 function love.update(dt)
   mouse.update()
   scene.update(dt)
+  Ccarte.Update(carte)
 
   --print("dt : "..dt)
   --table.insert(t, 1)
