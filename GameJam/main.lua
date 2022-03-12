@@ -1,13 +1,21 @@
 --love.graphics.setDefaultFilter("nearest") -- pas d'aliasing pour la 2D old scool
 
+
+--GLOBALES 
 WIDTH  = 1
 HEIGHT = 1
-
+TIME = 0
 CAM_SCALE = 1
 
+
+-- CLASSES 
+local Ccarte = require("carte")
 local scene = require("reseau") --require("game")
 local rect = require("rectangle")
 local mouse = require("mouse")
+
+-- INSTANCES
+local carte
 
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
@@ -18,6 +26,11 @@ function love.load()
   love.window.setMode(WIDTH, HEIGHT, FSTYPE)
 
   ImgThomasDP = love.graphics.newImage("Content/sus.png")
+
+  carte = Ccarte.Create()
+  Ccarte.Stroke(carte)
+  Ccarte.Stroke(carte)
+
   require("font").load()
   scene.load()
 end
@@ -29,6 +42,7 @@ function love.update(dt)
   --print("dt : "..dt)
   --table.insert(t, 1)
   --Img:getWidth()
+  TIME = TIME + dt
 end
 
 function love.draw()
@@ -41,12 +55,9 @@ function love.draw()
   --love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
-  
+
   scene.draw()
-
-
-  --local r = rect.create(128, 0, 64, 32)
-  --rect.draw(r)
+  Ccarte.Draw(carte)
 end
 
 function love.keypressed(key, scancode, isrepeat)
