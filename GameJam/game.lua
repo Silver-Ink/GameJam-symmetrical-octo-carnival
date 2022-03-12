@@ -26,6 +26,10 @@ game.initDefaultLevel = function ()
   require("element.mapLoader").load(game)
 end
 
+game.loadLocalPlayer = function()
+  require("element._loadStickman")(game, {x=3, y=3, mid = MID})
+end
+
 game.update = function(dt)
 
   for i = 1, game.MAX_ELEMENT do

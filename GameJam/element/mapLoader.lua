@@ -13,11 +13,8 @@ mapLoader.load = function (game)
       end]]
 
       game.create(t, {x=x, y=y, name="grass.png"}, nil, nil)
-
     end
   end
-
-  game.create(require("element.stickmanInit"), {x=3, y=3})
 end
 
 return mapLoader
