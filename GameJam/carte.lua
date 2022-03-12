@@ -1,24 +1,49 @@
 local carte = {}
 
-carte.Create = function ()
-  local newCarte = {}
-  newCarte.image = love.graphics.newCanvas()
-  return newCarte
+carte.BG = love.graphics.newImage("Content/carteBG.png")
+
+carte.Clear = function(pCarte)
+  love.graphics.setCanvas(pCarte.image)
+
+  love.graphics.clear(1, 1, 1, 0)
+  love.graphics.setCanvas()
 end
 
-function carte:Stroke(x1, y1, x2, y2)
+carte.Stroke = function(pCarte)
 
-  love.graphics.setCanvas(self.image)
-
-  love.graphics.clear(1, 1, 1, 0.4)
-  love.graphics.line(x1, y1, x2, y2)
-
+  love.graphics.setCanvas(pCarte.image)
+  love.graphics.setLineWidth( TIME )
+  love.graphics.setColor(0, 0, 0)
+  love.graphics.circle("fill", MOUSE_X, MOUSE_Y, TIME/ 2)
+  love.graphics.line(MOUSE_X, MOUSE_Y, OLD_MOUSE_X, OLD_MOUSE_Y)
+  love.graphics.setColor(1, 1, 1)
   love.graphics.setCanvas()
   
 end
 
-function carte:Draw()
-  love.graphics.draw(self.image, 150, 150, time / 10, 0.5, 0.5)
+carte.Erase = function(pCarte)
+  
+end
+
+carte.Update = function(pCarte)
+  if love.mouse.isDown(1) then
+    carte.Stroke(pCarte)
+  end
+  if love.keyboard.isDown("p") then
+    carte.Clear(pCarte)
+  end
+end
+
+carte.Draw = function(pCarte)
+  love.graphics.draw(carte.BG, WIDTH / 2, HEIGHT / 2, 0, 1, 1, WIDTH / 2, HEIGHT /2)
+  love.graphics.draw(pCarte.image, 0, 0)
+end
+
+carte.Create = function ()
+  local newCarte = {}
+  newCarte.image = love.graphics.newCanvas()
+  carte.Clear(newCarte)
+  return newCarte
 end
 
 return carte

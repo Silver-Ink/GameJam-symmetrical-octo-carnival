@@ -1,13 +1,21 @@
 --love.graphics.setDefaultFilter("nearest") -- pas d'aliasing pour la 2D old scool
 
+
+--GLOBALES 
 WIDTH  = 1
 HEIGHT = 1
-
+TIME = 0
 CAM_SCALE = 1
 
-local scene = require("reseau")
+
+-- CLASSES 
+local Ccarte = require("carte")
+local scene = require("reseau") --require("game")
 local rect = require("rectangle")
 local mouse = require("mouse")
+
+-- INSTANCES
+local carte
 
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
@@ -17,7 +25,9 @@ function love.load()
   FSTYPE = {resizable=false, fullscreen = FULLSCREEN, vsync=true, minwidth=WIDTH/2, minheight=HEIGHT/2}
   love.window.setMode(WIDTH, HEIGHT, FSTYPE)
 
-  Img = love.graphics.newImage("Content/sus.png")
+  ImgThomasDP = love.graphics.newImage("Content/sus.png")
+
+  carte = Ccarte.Create()
   require("font").load()
   scene.load()
 end
@@ -26,26 +36,32 @@ function love.update(dt)
   mouse.update()
   scene.update(dt)
 
+  if love.keyboard.isDown("m") then
+    Ccarte.Update(carte)
+  end
+
   --print("dt : "..dt)
   --table.insert(t, 1)
   --Img:getWidth()
+  TIME = TIME + dt
 end
 
 function love.draw()
   CAM_SCALE = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
   love.graphics.scale(CAM_SCALE, CAM_SCALE)
 
-  love.graphics.draw(Img)
-  love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
-  love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
-  love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
-  love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
-  
+  --love.graphics.draw(ImgThomasDP)
+  --love.graphics.print("Main.lua",    10, 10, 0, FONT_BIG)
+  --love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
+  --love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
+  --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
+  --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
+
   scene.draw()
 
-
-  --local r = rect.create(128, 0, 64, 32)
-  --rect.draw(r)
+  if love.keyboard.isDown("m") then
+      Ccarte.Draw(carte)
+    end
 end
 
 function love.keypressed(key, scancode, isrepeat)
