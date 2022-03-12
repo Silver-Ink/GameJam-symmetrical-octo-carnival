@@ -1,4 +1,4 @@
-game = {}
+local game = {}
 
 game.load = function()
 

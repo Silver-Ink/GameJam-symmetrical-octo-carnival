@@ -1,13 +1,22 @@
 --love.graphics.setDefaultFilter("nearest") -- pas d'aliasing pour la 2D old scool
 
+
+--GLOBALES 
 WIDTH  = 1
 HEIGHT = 1
+TIME = 0
+CAM_SCALE = 1
 
+
+-- CLASSES 
 local Ccarte = require("carte")
+local scene = require("reseau")
+local rect = require("rectangle")
+local mouse = require("mouse")
 
-
+-- INSTANCES
 local carte
-time = 0
+
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
   WIDTH  = 960 --love.graphics.getWidth()
@@ -22,18 +31,22 @@ function love.load()
   Ccarte.Stroke(carte)
   Ccarte.Stroke(carte)
   require("font").load()
+  scene.load()
 end
 
 function love.update(dt)
+  mouse.update()
+  scene.update(dt)
+
   --print("dt : "..dt)
   --table.insert(t, 1)
   --Img:getWidth()
-  time = time + dt
+  TIME = TIME + dt
 end
 
 function love.draw()
-  local scale = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
-  love.graphics.scale(scale, scale)
+  CAM_SCALE = math.min(love.graphics.getWidth()/WIDTH, love.graphics.getHeight()/HEIGHT)
+  love.graphics.scale(CAM_SCALE, CAM_SCALE)
 
   love.graphics.draw(Img)
   love.graphics.print("F11 Full Screen",    400, 100, 0, FONT_BIG)
@@ -41,7 +54,10 @@ function love.draw()
   love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 
+  
+  scene.draw()
   Ccarte.Draw(carte)
+
 end
 
 function love.keypressed(key, scancode, isrepeat)
