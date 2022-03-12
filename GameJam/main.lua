@@ -10,7 +10,7 @@ CAM_SCALE = 1
 
 -- CLASSES 
 local Ccarte = require("carte")
-local scene  = require("game") --require("reseau") --
+SCENE  = require("reseau")
 local rect   = require("rectangle")
 local mouse  = require("mouse")
 
@@ -29,13 +29,12 @@ function love.load()
 
   carte = Ccarte.Create()
   require("font").load()
-  scene.load()
-  scene.initDefaultLevel()
+  SCENE.load()
 end
 
 function love.update(dt)
   mouse.update()
-  scene.update(dt)
+  SCENE.update(dt)
 
   if love.keyboard.isDown("m") then
     Ccarte.Update(carte)
@@ -58,7 +57,7 @@ function love.draw()
   --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)
   --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 
-  scene.draw()
+  SCENE.draw()
 
   if love.keyboard.isDown("m") then
       Ccarte.Draw(carte)

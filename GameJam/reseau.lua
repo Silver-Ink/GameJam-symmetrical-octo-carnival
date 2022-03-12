@@ -16,6 +16,11 @@ reseau.update = function(dt)
     --start the thread
     Thread:start()
     print("boutton b1")
+
+    SCENE = require("game")
+    SCENE.load()
+    SCENE.initDefaultLevel()
+    SCENE.loadLocalPlayer()
   end
 
   if button.isPress(reseau.b2) then
@@ -23,10 +28,17 @@ reseau.update = function(dt)
     --start the thread
     Thread:start()
     print("boutton b2")
+
+    SCENE = require("game")
+    SCENE.load()
+    SCENE.loadLocalPlayer()
   end
+
 end
 
 reseau.draw = function()
+
+
   button.draw(reseau.b1)
   button.draw(reseau.b2)
   --reseau.b1.draw()
