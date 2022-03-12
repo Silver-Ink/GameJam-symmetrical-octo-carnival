@@ -4,20 +4,23 @@ local button = {}
 local rect = require("rectangle")
 local color = require("color")
 
-button.create = function(rectangle, colorTableWith_R_G_B)
-  local b = { hitbox = rectangle, color= colorTableWith_R_G_B or color.white}
+button.create = function(rectangle, color)
+  color = color or color.white
+  local b = { hitbox = rectangle, color= color, colorDisplay = color}
   return b
 end
 
 function button:draw()
-  local scale = 1
   if(button.isPress(self)) then
-    scale = 0
+    self.colorDisplay = color.black
   elseif(button.isHover(self)) then
-    scale = 0.5
+    self.colorDisplay = color.lerp(self.colorDisplay, color.lerp(self.color, color.black, 0.5), 0.9)
+  else
+    self.colorDisplay = color.lerp(self.colorDisplay, self.color, 0.9)
   end 
 
-  color.apply(color.create(self.color.r*scale,self.color.g*scale,self.color.b*scale, self.color.a))
+  --self.colorDisplay = color.lerp(self.color, )
+  color.apply(self.colorDisplay)
   rect.draw(self.hitbox)
   color.apply(color.white)
 end
