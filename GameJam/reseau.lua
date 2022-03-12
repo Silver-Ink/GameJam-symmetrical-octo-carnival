@@ -8,7 +8,6 @@ reseau.load = function()
   reseau.b1 = button.create(rect.create(64,64,128,128), color.create(1, 0, 0))
   reseau.b2 = button.create(rect.create(64+256*1,64,128,128), color.create(0, 1, 0))
   print("reseaux")
-
 end
 
 reseau.update = function(dt)
