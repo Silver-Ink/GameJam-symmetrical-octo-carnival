@@ -10,9 +10,9 @@ CAM_SCALE = 1
 
 -- CLASSES 
 local Ccarte = require("carte")
-local scene = require("reseau") --require("game") --
-local rect = require("rectangle")
-local mouse = require("mouse")
+local scene  = require("game") --require("reseau") --
+local rect   = require("rectangle")
+local mouse  = require("mouse")
 
 -- INSTANCES
 local carte
@@ -30,6 +30,7 @@ function love.load()
   carte = Ccarte.Create()
   require("font").load()
   scene.load()
+  scene.initDefaultLevel()
 end
 
 function love.update(dt)

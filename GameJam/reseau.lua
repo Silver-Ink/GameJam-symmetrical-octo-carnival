@@ -12,10 +12,16 @@ end
 
 reseau.update = function(dt)
   if button.isPress(reseau.b1) then
-  print("boutton b1")
+    Thread = love.thread.newThread("client.lua", "client")
+    --start the thread
+    Thread:start()
+    print("boutton b1")
   end
 
   if button.isPress(reseau.b2) then
+    Thread = love.thread.newThread("serveur.lua", "serv")
+    --start the thread
+    Thread:start()
     print("boutton b2")
   end
 end
