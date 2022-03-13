@@ -5,7 +5,7 @@ return function (elem)
   --(elem.mid or -1)
   if(elem.mid == MID) then
     local xAdd, yAdd = 0, 0
-    local max_speed =  1/16
+    local max_speed =  1/10
     if love.keyboard.isDown("right") then
       xAdd = 1
       --elem.hitbox.x = elem.hitbox.x + speed

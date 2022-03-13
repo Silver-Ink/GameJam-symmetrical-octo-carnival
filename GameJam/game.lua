@@ -7,7 +7,7 @@ local sprite = require("sprite")
 require("gameFunc")
 require("element.element")
 
-Game.MAX_ELEMENT = 1500
+Game.MAX_ELEMENT = 3000
 
 local game_bg = love.graphics.newImage("Content/grass.png")
 
@@ -108,7 +108,7 @@ end
 Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
-  local nbTileY = 8
+  local nbTileY = 12
   local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
   love.graphics.scale(HEIGHT/nbTileY)
 
