@@ -1,5 +1,7 @@
 local mazeGenerator = {}
 
+
+local socket = require "socket"
 mazeGenerator.grid = {}
 mazeGenerator.numberOfColumns = 0
 mazeGenerator.numberOfRows = 0
@@ -8,16 +10,16 @@ mazeGenerator.exitBoundaryExtendFactor = 0.5
 mazeGenerator.SpawningAreaTop = 0
 mazeGenerator.SpawningAreaLeft = 0
 mazeGenerator.SpawningAreaSize = 4 * 2  --doit etre un multiple de 4
-mazeGenerator.bonusChestExtendFactor  = 0.6
+mazeGenerator.bonusChestExtendFactor  = 0.8
 mazeGenerator.numberOfBonusChests = 2
 mazeGenerator.numberOfChests1 = 1
 mazeGenerator.numberOfChests2 = 1
 mazeGenerator.numberOfChests3 = 1
 mazeGenerator.numberOfChests4 = 1
-mazeGenerator.regularChestsExtendFactor = 0.8
+mazeGenerator.regularChestsExtendFactor = 1
 
 local explored = 0
-local seed = os.clock()
+local seed = socket.gettime() * 1000
 local maxNumberOfTriesForDoorsBySide = 20
 local chests_rows = {}
 local chests_columns = {}
@@ -62,7 +64,7 @@ function mazeGenerator.DigWallAt(row, column)
   function mazeGenerator.IsInsideBonusChestsArea(row,column)
     local rowTest = (row >= mazeGenerator.topBonusBoundary and row <= mazeGenerator.topBonusBoundary + mazeGenerator.bonusBoundarySize)
     local columTest = (column >= mazeGenerator.leftBonusBoundary and column <= mazeGenerator.leftBonusBoundary + mazeGenerator.bonusBoundarySize)
-    return rowTest and columTest and not(mazeGenerator.IsInsideSpawningAreaExtended(row,column))
+    return not(rowTest and columTest) and not(mazeGenerator.IsInsideSpawningAreaExtended(row,column))
   end 
 
   function mazeGenerator.IsInsideRegularChestsArea(row,column)
@@ -103,11 +105,13 @@ function mazeGenerator.DigWallAt(row, column)
     local sum = 0
 
     for id1=1,#chests_rows do
-      for id2=id1,#chests_rows do
-        sum = sum + math.min(math.abs(chests_rows[id1] - chests_columns[id2]),math.abs(chests_columns[id1] - chests_rows[id2]))
+      for id2=id1+1,#chests_rows do
+        sum = sum + math.min(math.abs(chests_rows[id1] - chests_columns[id2]) + math.abs(chests_columns[id1] - chests_rows[id2]))
+    
       end
     end
-    return sum / #chests_rows
+    print(sum / (#chests_rows * (#chests_rows - 1)/2) )
+    return sum / (#chests_rows * (#chests_rows - 1)/2) 
   end
   
   
@@ -353,7 +357,8 @@ function mazeGenerator.DigWallAt(row, column)
   
   function mazeGenerator.Initialize(startingPointRow, startingPointColumn)
     --fixe la seed rnd
-    seed = os.clock()
+    seed = socket.gettime() * 1000
+
     love.math.setRandomSeed(seed)
     
     chests_columns = {}

@@ -14,11 +14,11 @@ local function placeSolidBlock(x, y, texture)
 
   local r = math.random()
   local alt = ""
-  if r < 0.85 then
+  if r < 0.95 then
     alt = textures[1]
-  elseif r < 0.9 then
+  elseif r < 0.97 then
     alt = textures[3]
-  elseif r < 0.95 then
+  elseif r < 0.99 then
     alt = textures[2]
   else
     alt = textures[4]
