@@ -12,6 +12,10 @@ Element.hitboxCollide = function(elemA, elemB)
   return elemA.index ~= elemB.index and elemA.hitbox.x+elemA.hitbox.w > elemB.hitbox.x and elemA.hitbox.x < elemB.hitbox.x+elemB.hitbox.w and elemA.hitbox.y+elemA.hitbox.h > elemB.hitbox.y and elemA.hitbox.y < elemB.hitbox.y+elemB.hitbox.h
 end
 
+Element.Delete = function (element)
+  element.isUsed = false
+end
+
 Element.move = function(elem, x, y)
     if(x == 0 and y == 0) then return end
     if(x ~= 0 and y ~= 0) then 
