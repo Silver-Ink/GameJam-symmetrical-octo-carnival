@@ -17,10 +17,13 @@ local mouse  = require("mouse")
 -- INSTANCES
 local carte
 
+
+
 function love.load()
   love.window.setTitle("<NOM DU JEU> (by Wile)")
   WIDTH  = 960 --love.graphics.getWidth()
   HEIGHT = 540 --love.graphics.getHeight()
+  
   FULLSCREEN = false
   FSTYPE = {resizable=false, fullscreen = FULLSCREEN, vsync=true, minwidth=WIDTH/2, minheight=HEIGHT/2}
   love.window.setMode(WIDTH, HEIGHT, FSTYPE)
