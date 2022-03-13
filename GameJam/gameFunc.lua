@@ -20,8 +20,8 @@ local function getFuncId(funcPtr)
   return GameFunc[funcPtr]
 end
 
-local function getFuncFromId(id)
-  return GameFunc[id]
+local function getFuncFromId(FuncId)
+  return GameFunc[FuncId]
 end
 
 addFunc(nil)
