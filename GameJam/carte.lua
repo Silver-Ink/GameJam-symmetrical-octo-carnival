@@ -30,7 +30,7 @@ carte.Update = function(pCarte)
     carte.Stroke(pCarte, 0, 0, 0, 8)
   end
   if love.mouse.isDown(2) then
-    carte.Stroke(pCarte, 148/256, 114/256, 64/256, 24)
+    carte.Stroke(pCarte, 148/256, 114/256, 64/256, 8*6)
   end
   if love.keyboard.isDown("p") then
     carte.Clear(pCarte)

@@ -1,11 +1,13 @@
 Game = {}
 
+TICK = 0
+
 local rect = require("rectangle")
 local sprite = require("sprite")
 require("gameFunc")
 require("element.element")
 
-Game.MAX_ELEMENT = 1000
+Game.MAX_ELEMENT = 500
 
 local game_bg = love.graphics.newImage("Content/grass.png")
 
@@ -16,6 +18,7 @@ Game.load = function()
 
   Game.camX = 0
   Game.camY = 0
+  TICK = 0
 
   for i = 1, Game.MAX_ELEMENT do
     Game.elements[i] = Element.game_true_create_do_not_use(i)
@@ -36,6 +39,7 @@ end
 
 Game.update = function(dt)
 
+  TICK = TICK+1
   for i = 1, Game.MAX_ELEMENT do
     local e = Game.elements[i]
     if(e.isUsed and e.update ~= nil) then

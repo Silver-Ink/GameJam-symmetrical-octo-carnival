@@ -18,11 +18,12 @@ return function (elem)
       yAdd = -1
     end
     if love.keyboard.isDown("down") then
-      yAdd = 1
+      yAdd =  1
     end
     
-    elem.hitbox.x = elem.hitbox.x + xAdd*max_speed
-    elem.hitbox.y = elem.hitbox.y + yAdd*max_speed
-
+    elem.isMoving = xAdd ~= 0 or yAdd ~= 0
+    --elem.hitbox.x = elem.hitbox.x + xAdd*max_speed
+    --elem.hitbox.y = elem.hitbox.y + yAdd*max_speed
+    Element.move(elem, xAdd*max_speed, yAdd*max_speed)
   end
 end
