@@ -4,7 +4,7 @@ local id = 1
 
 local function addFunc(file)
   if(file ~= nil) then
-    file = "logic."..file
+    file = "element.logic."..file
   else file = "nil" end
   GameFunc[id]   = file
   GameFunc[file] = id
