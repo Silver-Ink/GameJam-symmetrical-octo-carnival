@@ -44,6 +44,8 @@ mapLoader.load = function (_)
       if mazeGenerator.grid[row][column] == "wall" then
         if row <= 2 or row >= mazeGenerator.numberOfRows - 2 or column <= 2 or column >= mazeGenerator.numberOfColumns - 2 then
           placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"wall.png")
+        elseif row == mazeGenerator.SpawningAreaTop or row == mazeGenerator.SpawningAreaTop + mazeGenerator.SpawningAreaSize or column == mazeGenerator.SpawningAreaLeft or column == mazeGenerator.SpawningAreaLeft + mazeGenerator.SpawningAreaSize then
+          placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"wall.png")
         else
           placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2) 
         end
