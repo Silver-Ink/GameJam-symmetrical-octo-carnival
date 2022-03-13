@@ -117,9 +117,10 @@ mapLoader.load = function (_)
 
   local angle = math.random()*2*math.pi --math.atan(exitY, exitX)
   --print(angle)
-  for i = -2, 2 do
+  for i = -3, 3 do
     if(i ~= 0) then
-      placeNonSolidBlock(exitX+math.cos(angle)*i*8*(i*i/4), exitY+math.sin(angle)*i*8*(i*i/4), "eye.png")
+      --placeNonSolidBlock(exitX+math.cos(angle)*i*3*(i*i/2), exitY+math.sin(angle)*i*3*(i*i/2), "eye.png")
+      placeNonSolidBlock(exitX+math.cos(angle)*i*10, exitY+math.sin(angle)*i*10, "eye.png")
     end
   end
 

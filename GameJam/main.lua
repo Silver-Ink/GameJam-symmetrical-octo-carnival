@@ -24,7 +24,7 @@ USE_MAP=  false
 _OLD_KEY_M_PRESS = false
 
 function love.load()
-  love.window.setTitle("A La Carte (by 4 Pizz 2)")
+  love.window.setTitle("A La Carte (by 4 Pizz 2 aka Les chouquettes aux fromages)")
   WIDTH  = 960 --love.graphics.getWidth()
   HEIGHT = 540 --love.graphics.getHeight()
   
