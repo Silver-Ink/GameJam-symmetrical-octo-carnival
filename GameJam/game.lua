@@ -4,13 +4,14 @@ local rect = require("rectangle")
 local sprite = require("sprite")
 require("gameFunc")
 
+Game.MAX_ELEMENT = 1000
+
 local game_bg = love.graphics.newImage("Content/grass.png")
 
 Game.load = function()
   Game.elementBuilder = require("element.element")
   Game.elements = {}
 
-  Game.MAX_ELEMENT = 1000
   Game.CREATE_ELEMENT_INDEX = 0
 
   Game.camX = 0
