@@ -1,3 +1,5 @@
+local nbOfKey = 4
+
 return function(elem)
   local e
   for i = 1, Game.MAX_ELEMENT, 1 do
@@ -21,7 +23,7 @@ return function(elem)
       end
     end
 
-    if (count >= 2) then
+    if (count >= nbOfKey) then
       print(#e.inventory)
       for i = #e.inventory, 1, -1 do
         local item = e.inventory[i]
