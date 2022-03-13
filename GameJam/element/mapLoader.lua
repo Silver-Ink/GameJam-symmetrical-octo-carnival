@@ -11,8 +11,9 @@ mapLoader.load = function (game)
       if((x)%4==0) then
         drawMethod = require("element.tileDraw2")
       end]]
-
-      game.create(t, {x=x, y=y, name="grass.png"}, nil, nil)
+      if((x+y)%8==0) then
+      game.create(t, {x=x, y=y, name="wall.png"}, nil, nil)
+      end
     end
   end
 end
