@@ -26,8 +26,8 @@ local function placeSolidBlock(x, y, texture)
   Game.create(tileInit, {x=2*x , y=2*y , name=texture or alt, hx=2,hy=2 }, nil, nil)
 end
 
-local function placeNonSolidBlock(x, y, texture)
-  Game.create(tileInit, {x=2*x , y=2*y , name=texture or "chest_red_close.png", hx=2,hy=2,isSolid = false}, require("element.logic.chestUpdate"), nil)
+local function placeNonSolidBlock(x, y, texture, updateMethod)
+  Game.create(tileInit, {x=2*x , y=2*y , name=texture or "chest_red_close.png", hx=2,hy=2,isSolid = false}, updateMethod, nil)
 end
 
 
@@ -40,7 +40,7 @@ mapLoader.load = function (_)
         placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2) 
       end
       if mazeGenerator.grid[row][column] == "chest1" or mazeGenerator.grid[row][column] == "chest2" then
-        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_red_close.png")
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_red_close.png", require("element.logic.chestUpdate"))
       end
     end
 
