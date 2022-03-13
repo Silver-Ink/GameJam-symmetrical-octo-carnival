@@ -8,6 +8,10 @@ element.game_true_create_do_not_use = function (index)
   return { isUsed = false, index = index}
 end
 
+--function ElementMove(element, game, x, y)
+    
+--end
+
 function element:reset() 
   for k, v in pairs(self) do
     if(k ~= "index" and k ~= "isUsed") then
