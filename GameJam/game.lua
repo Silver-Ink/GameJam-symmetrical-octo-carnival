@@ -2,6 +2,7 @@ local game = {}
 
 local rect = require("rectangle")
 local sprite = require("sprite")
+require("gameFunc")
 
 game.load = function()
   game.elementBuilder = require("element.element")

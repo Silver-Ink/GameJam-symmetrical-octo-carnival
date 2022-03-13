@@ -12,10 +12,10 @@ end
 carte.Stroke = function(pCarte)
 
   love.graphics.setCanvas(pCarte.image)
-  love.graphics.setLineWidth( TIME )
+  love.graphics.setLineWidth(8/CAM_SCALE)
   love.graphics.setColor(0, 0, 0)
-  love.graphics.circle("fill", MOUSE_X, MOUSE_Y, TIME/ 2)
-  love.graphics.line(MOUSE_X, MOUSE_Y, OLD_MOUSE_X, OLD_MOUSE_Y)
+  love.graphics.circle("fill", MOUSE_X/CAM_SCALE, MOUSE_Y/CAM_SCALE, 4/CAM_SCALE) --TIME/ 2)
+  love.graphics.line(MOUSE_X/CAM_SCALE, MOUSE_Y/CAM_SCALE, OLD_MOUSE_X/CAM_SCALE, OLD_MOUSE_Y/CAM_SCALE)
   love.graphics.setColor(1, 1, 1)
   love.graphics.setCanvas()
   
