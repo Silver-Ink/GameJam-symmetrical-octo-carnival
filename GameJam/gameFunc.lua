@@ -46,11 +46,23 @@ local function scandir(directory)
   return t, i
 end
 
-local current_dir=io.popen"cd":read'*l'
+--local current_dir=io.popen"cd":read'*l'
 
-local lstFile, nbFile = scandir(current_dir .. "\\element\\logic")
+--local tmp = package.config:sub(1,1)
+
+--local lstFile, nbFile = scandir(current_dir .. tmp .. "element" .. tmp .. "logic")
 
 
-for nb = 0, nbFile do
-  addFunc(lstFile[nb])
-end
+--for nb = 0, nbFile do
+  --addFunc(lstFile[nb])
+  --print(lstFile[nb])
+--end
+
+
+addFunc(nil)
+addFunc("elementDraw")
+addFunc("stickmanDraw")
+addFunc("stickmanUpdate")
+addFunc("tileDraw")
+addFunc("tileDraw2")
+

@@ -7,12 +7,15 @@ HEIGHT = 1
 TIME = 0
 CAM_SCALE = 1
 
+
 IS_SERVEUR = false
+IS_CLIENT = false
 
 
 -- CLASSES 
 local Ccarte = require("carte")
-SCENE  = require("reseau")
+local reseau = require("reseau")
+SCENE  = reseau
 local rect   = require("rectangle")
 local mouse  = require("mouse")
 
@@ -42,6 +45,8 @@ function love.update(dt)
 
   if IS_SERVEUR then
     reseau.searchNewPlayer()
+  elseif IS_CLIENT then
+    reseau.listenServ()
   end
 
   if love.keyboard.isDown("m") then
@@ -79,3 +84,4 @@ function love.keypressed(key, scancode, isrepeat)
 		love.window.setFullscreen(FULLSCREEN)
 	end
 end
+

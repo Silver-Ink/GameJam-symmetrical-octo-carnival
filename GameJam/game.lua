@@ -4,7 +4,10 @@ local rect = require("rectangle")
 local sprite = require("sprite")
 require("gameFunc")
 
+
 Game.MAX_ELEMENT = 1000
+
+
 
 local game_bg = love.graphics.newImage("Content/grass.png")
 
@@ -24,6 +27,7 @@ Game.load = function()
   for i = 1, Game.MAX_ELEMENT do
     Game.elementBuilder.reset(Game.elements[i])
   end
+
 end
 
 Game.initDefaultLevel = function ()
@@ -48,6 +52,8 @@ Game.update = function(dt)
       end
     end
   end
+
+
   --[[
   local camSpeed =  1/16
   if love.keyboard.isDown("right") then
