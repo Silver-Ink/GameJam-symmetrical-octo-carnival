@@ -104,7 +104,7 @@ mapLoader.load = function (_)
   --print(angle)
   for i = -4, 4 do
     if(i ~= 0) then
-      placeNonSolidBlock(exitX+math.cos(angle)*i*-10, exitY+math.sin(angle)*i*-10, "eye.png")
+      placeNonSolidBlock(exitX+math.cos(angle)*i*-8, exitY+math.sin(angle)*i*-8, "eye.png")
     end
   end
 
