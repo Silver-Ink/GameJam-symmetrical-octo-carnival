@@ -65,4 +65,7 @@ addFunc("stickmanDraw")
 addFunc("stickmanUpdate")
 addFunc("tileDraw")
 addFunc("tileDraw2")
-
+addFunc("chestUpdate")
+addFunc("craftorUpdate")
+addFunc("keyUpdate")
+addFunc("trappeUpdate")

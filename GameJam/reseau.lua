@@ -116,6 +116,7 @@ function OpenConnect(client, nbPlayer)
               Game.elements[i].hitbox.y = tonumber(y)
             end
               for k, v in pairs(Game.elements[i]) do
+                if(k ~= "inventory") then
                   client:send(k .. "\n")
                   if(k == "draw" or k == "update") then
                     local tmp = getFuncId(v)
@@ -140,6 +141,7 @@ function OpenConnect(client, nbPlayer)
                       end
                       client:send(v .. "\n")
                   end
+                end
               end
               client:send("FINI\n")
           end
