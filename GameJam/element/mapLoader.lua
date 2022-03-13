@@ -27,24 +27,75 @@ local function placeSolidBlock(x, y, texture)
 end
 
 local function placeNonSolidBlock(x, y, texture, updateMethod)
-  Game.create(tileInit, {x=2*x , y=2*y , name=texture or "chest_red_close.png", hx=2,hy=2,isSolid = false}, updateMethod, nil)
+  Game.create(tileInit, {x=2*x , y=2*y , name=texture, hx=2,hy=2,isSolid = false}, updateMethod, nil)
 end
 
 
 
 mapLoader.load = function (_)
 
+  local hasLeft = true
+  local hasTop = false
   for row=1,mazeGenerator.numberOfRows do 
     for column=1,mazeGenerator.numberOfColumns do
       if mazeGenerator.grid[row][column] == "wall" then
         placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2) 
+        hasLeft = false
       end
-      if mazeGenerator.grid[row][column] == "chest1" or mazeGenerator.grid[row][column] == "chest2" then
+      if mazeGenerator.grid[row][column] == "chest1" then
+        hasLeft = false
         placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_red_close.png", require("element.logic.chestUpdate"))
+      elseif mazeGenerator.grid[row][column] == "chest2" then
+        hasLeft = false
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_blue_close.png", require("element.logic.chestUpdate"))
+      elseif mazeGenerator.grid[row][column] == "chest3" then
+        hasLeft = false
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_green_close.png", require("element.logic.chestUpdate"))
+      elseif mazeGenerator.grid[row][column] == "chest4" then
+        hasLeft = false
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_silver_close.png", require("element.logic.chestUpdate"))
+      elseif mazeGenerator.grid[row][column] == "bonusChest" then
+        hasLeft = false
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"chest_yellow_close.png", require("element.logic.chestUpdate"))
+      
+      elseif mazeGenerator.grid[row][column] == "spawn" then
+        local tile = ""
+        if row > 1 and mazeGenerator.grid[row-1][column] == "wall" then
+          hasTop = false
+        elseif row % 2 ~= 0  then
+          hasTop = false
+        elseif row %2 == 0 then
+          hasTop = true
+        end
+
+        if column > 1 and mazeGenerator.grid[row][column-1] == "wall" then
+          hasLeft = false
+        elseif column % 2 == 1 then
+          hasLeft = false
+        elseif column % 2 == 0 then
+          hasLeft = true
+        end
+        if hasLeft and hasTop then
+          tile = "br_tile.png"  
+        elseif hasLeft and not(hasTop) then
+          tile = "tr_tile.png"
+        elseif not(hasLeft) and hasTop then
+          tile = "bl_tile.png"
+        elseif not(hasLeft) and not(hasTop) then
+          tile = "tl_tile.png"
+        end
+        hasLeft = not(hasLeft)
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,tile,nil)
+      end
+      
+      if mazeGenerator.grid[row][column] == "exit" then
+        placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"trape_close.png")
       end
     end
-
+  
   end
+
+  
 end
 
 return mapLoader
