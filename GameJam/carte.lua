@@ -27,10 +27,10 @@ end
 
 carte.Update = function(pCarte)
   if love.mouse.isDown(1) then
-    carte.Stroke(pCarte, 0, 0, 0, 8)
+    carte.Stroke(pCarte, 0, 0, 0, 5)
   end
   if love.mouse.isDown(2) then
-    carte.Stroke(pCarte, 148/256, 114/256, 64/256, 8*6)
+    carte.Stroke(pCarte, 148/256, 114/256, 64/256, 5*6)
   end
   if love.keyboard.isDown("p") then
     carte.Clear(pCarte)
@@ -42,6 +42,14 @@ carte.Draw = function(pCarte)
   love.graphics.draw(pCarte.image, 0, 0)
   love.graphics.print("P : Clear", 50, HEIGHT-90, 0, FONT_NORMAL)
   love.graphics.print("Click gauche/droit: dessiner", 50, HEIGHT-50, 0, FONT_NORMAL)
+
+  for i = 1, Game.MAX_ELEMENT do
+    local e = Game.elements[i]
+    if(e.isUsed and e.type == "player" and e.mid == MID) then
+      local c = 7
+      love.graphics.circle("fill", e.hitbox.x*c+WIDTH/2, e.hitbox.y*c+HEIGHT/2, 4)
+    end
+  end
 
 end
 
