@@ -10,7 +10,9 @@ return function (elem)
       local e = Game.elements[i]
       if(e.isUsed and e.type == "player" and Distance(e.hitbox.x+e.hitbox.w/2, e.hitbox.y+e.hitbox.h/2, elem.hitbox.x+elem.hitbox.w/2, elem.hitbox.y+elem.hitbox.h/2) <= 2) then
         print("Chest open")
-        elem.sprite = require("sprite").create("Content/chest_red_open.png")
+        local t = string.sub(elem.sprite.path, 0, #elem.sprite.path-9).."open.png"
+        print(t)
+        elem.sprite = require("sprite").create(t)
         elem.update = nil
 
         local k = Game.create(require("element.tileInit"), {name="key.png", x=elem.hitbox.x+elem.hitbox.w/4, y=elem.hitbox.y+elem.hitbox.h/4, isSolid=false}, require("element.logic.keyUpdate"))
