@@ -7,7 +7,7 @@ local color = require("color")
 reseau.load = function()
   local w, h = 128, 96
   reseau.b1 = button.create(rect.create(WIDTH/2+32,HEIGHT/2,w,h), color.create(1, 0, 0), "Host")
-  reseau.b2 = button.create(rect.create(WIDTH/2-32-w,HEIGHT/2,w,h), color.create(0, 1, 0), "Join")
+  reseau.b2 = button.create(rect.create(WIDTH/2-32-w,HEIGHT/2,w,h), color.create(0, 1, 0), "Join") --"Join\nMathieu pour les fonctions on les\nstocks dans le tableau\ndans gameFunc.lua ?")
   print("reseaux")
 end
 
