@@ -88,7 +88,7 @@ Game.create_empty_element = function ()
   local tentative = 0
   repeat
     tentative = tentative+1
-    Game.CREATE_ELEMENT_INDEX = ((Game.CREATE_ELEMENT_INDEX+1) % Game.MAX_ELEMENT) + 1
+    Game.CREATE_ELEMENT_INDEX = ((Game.CREATE_ELEMENT_INDEX) % (Game.MAX_ELEMENT-1)) + 1
     if(tentative > Game.MAX_ELEMENT*0.8) then
       return nil
     end
@@ -114,7 +114,7 @@ end
 Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
-  local nbTileY = 12
+  local nbTileY = 70
   local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
   love.graphics.scale(HEIGHT/nbTileY)
 
