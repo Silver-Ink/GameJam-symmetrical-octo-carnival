@@ -15,7 +15,12 @@ return function (elem)
 
         local k = Game.create(require("element.tileInit"), {name="key.png", x=elem.hitbox.x+elem.hitbox.w/4, y=elem.hitbox.y+elem.hitbox.h/4, isSolid=false}, require("element.logic.keyUpdate"))
         if(k ~= nil) then
-          k.ownerIndex = e.index
+          if #e.inventory == 0 then
+            k.ownerIndex = e.index
+          else
+            k.ownerIndex = e.inventory[#e.inventory].index
+          end
+          table.insert(e.inventory, k)
         end
       end
     end
