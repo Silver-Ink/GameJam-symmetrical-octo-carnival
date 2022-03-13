@@ -7,6 +7,8 @@ local sprite = require("sprite")
 require("gameFunc")
 require("element.element")
 
+local color = require("color")
+
 Game.MAX_ELEMENT = 3000
 
 local game_bg = love.graphics.newImage("Content/grass.png")
@@ -105,6 +107,10 @@ Game.delete = function(element)
   Game.deleteAt(element.index)
 end
 
+function Constraint(val, min, max)
+  return math.max(math.min(val, max), min)
+end
+
 Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
@@ -132,6 +138,11 @@ Game.draw = function()
   end
 
   love.graphics.pop()
+
+  local c = color.create(0,0,0, Constraint(math.sin(TICK/60*math.pi*2/30)*-1+0.5, 0, 1))
+  color.apply(c)
+  love.graphics.rectangle("fill", 0,0, WIDTH, HEIGHT)
+  color.apply(color.white)
 
   love.graphics.print("Game", 10, 10, 0, FONT_BIG)
   love.graphics.print("M pour dessiner", 10, HEIGHT-40, 0, FONT_BIG)
