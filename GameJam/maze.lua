@@ -3,14 +3,15 @@ local mazeGenerator = {}
 mazeGenerator.grid = {}
 mazeGenerator.numberOfColumns = 0
 mazeGenerator.numberOfRows = 0
-local cells = 5 *3
-local explored = 0
-local seed = os.clock()
+mazeGenerator.cellSize = 5 *3 
+mazeGenerator.exitBoundaryExtendFactor = 0.5 
 mazeGenerator.SpawningAreaTop = 0
 mazeGenerator.SpawningAreaLeft = 0
 mazeGenerator.SpawningAreaSize = 4 * 3  --doit etre un multiple de 4
+local explored = 0
+local seed = os.clock()
 local maxNumberOfTriesForDoorsBySide = 20
-local extendFactor = 0.5
+
 
 
 
@@ -112,11 +113,11 @@ function mazeGenerator.DigWallAt(row, column)
   end
   
   function mazeGenerator.GetRowIndex(x)
-    return math.floor(x / cells)
+    return math.floor(x / mazeGenerator.cellSize)
   end
   
   function mazeGenerator.GetColumnIndex(y)
-    return math.floor(y / cells)
+    return math.floor(y / mazeGenerator.cellSize)
   end
   
   function mazeGenerator.GenerateSpawningAreaDoorsToTheLeft()
@@ -144,7 +145,7 @@ function mazeGenerator.DigWallAt(row, column)
   
   
   function mazeGenerator.GenerateSpawningAreaDoorsToTheRight()
-    for i = 1, mazeGenerator.maxNumberOfTriesForDoorsBySide do
+    for i = 1, maxNumberOfTriesForDoorsBySide do
       local row = love.math.random(mazeGenerator.SpawningAreaTop + 1, mazeGenerator.SpawningAreaTop + mazeGenerator.SpawningAreaSize - 1)
   
       local possible = true
@@ -156,13 +157,13 @@ function mazeGenerator.DigWallAt(row, column)
         if mazeGenerator.grid[row][mazeGenerator.SpawningAreaLeft + mazeGenerator.SpawningAreaSize  + 1] == "wall" then
             mazeGenerator.grid[row][mazeGenerator.SpawningAreaLeft + mazeGenerator.SpawningAreaSize + 1] = "door"
           
-        
           break
         end
       end
     end
   end
   
+
   function mazeGenerator.GenerateSpawningAreaDoorsToTheTop()
     for i = 1, mazeGenerator.maxNumberOfTriesForDoorsBySide do
       local column = love.math.random(mazeGenerator.SpawningAreaLeft + 1, mazeGenerator.SpawningAreaLeft   + mazeGenerator.SpawningAreaSize - 1)
@@ -226,35 +227,35 @@ function mazeGenerator.DigWallAt(row, column)
       
   end
   
-  function mazeGenerator.Initialize()
+  function mazeGenerator.Initialize(startingPointRow, startingPointColumn)
     --fixe la seed rnd
     love.math.setRandomSeed(seed)
     
     mazeGenerator.grid = {}
     explored = 0
     
-    mazeGenerator.numberOfColumns = math.floor(WIDTH / cells)
-    mazeGenerator.numberOfRows = math.floor(HEIGHT / cells)
+    mazeGenerator.numberOfColumns = math.floor(800 / mazeGenerator.cellSize)
+    mazeGenerator.numberOfRows = math.floor(600 / mazeGenerator.cellSize)
   
-    mazeGenerator.SpawningAreaLeft = mazeGenerator.GetColumnIndex(math.floor(WIDTH / 2)) - math.floor(mazeGenerator.SpawningAreaSize / 2)
-    mazeGenerator.SpawningAreaTop = mazeGenerator.GetRowIndex(math.floor(HEIGHT / 2)) - math.floor(mazeGenerator.SpawningAreaSize / 2)
+    mazeGenerator.SpawningAreaLeft = mazeGenerator.GetColumnIndex(math.floor(800 / 2)) - math.floor(mazeGenerator.SpawningAreaSize / 2)
+    mazeGenerator.SpawningAreaTop = mazeGenerator.GetRowIndex(math.floor(600 / 2)) - math.floor(mazeGenerator.SpawningAreaSize / 2)
     
     --Generate exitBoundary specificities
-    mazeGenerator.topExitBoundary = mazeGenerator.SpawningAreaTop - mazeGenerator.SpawningAreaSize * extendFactor
-    mazeGenerator.leftExitBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * extendFactor
-    mazeGenerator.exitBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *extendFactor)
+    mazeGenerator.topExitBoundary = mazeGenerator.SpawningAreaTop - mazeGenerator.SpawningAreaSize * mazeGenerator.exitBoundaryExtendFactor
+    mazeGenerator.leftExitBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * mazeGenerator.exitBoundaryExtendFactor
+    mazeGenerator.exitBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *mazeGenerator.exitBoundaryExtendFactor)
     
     --fill the grid 
     mazeGenerator.InitGrid()
     
     --start the maze!
-    mazeGenerator.Explore(2, 2)
+    mazeGenerator.Explore(startingPointRow, startingPointColumn)
   end
   
 
 
 function mazeGenerator.Generate()
-    mazeGenerator.Initialize()
+    mazeGenerator.Initialize(2,2)
     mazeGenerator.GenerateSpawningAreaDoors()
     mazeGenerator.GenerateExit() 
 end
