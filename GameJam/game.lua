@@ -114,7 +114,7 @@ end
 Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
-  local nbTileY = 12
+  local nbTileY = 70
   local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
   love.graphics.scale(HEIGHT/nbTileY)
 
@@ -139,7 +139,7 @@ Game.draw = function()
 
   love.graphics.pop()
 
-  local c = color.create(0,0,0, Constraint(math.sin(TICK/60*math.pi*2/30)*-1+0.5, 0, 1))
+  local c = color.create(0,0,0, Constraint(math.sin(TICK/60*math.pi*2/30)*-0.75+0.25, 0, 1))
   color.apply(c)
   love.graphics.rectangle("fill", 0,0, WIDTH, HEIGHT)
   color.apply(color.white)
