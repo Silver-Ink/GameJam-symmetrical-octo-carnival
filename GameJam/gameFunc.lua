@@ -38,25 +38,19 @@ local function scandir(directory)
           car = filename:sub(filename:len() - (ret+1), filename:len()-(ret+1))
         end
         i = i + 1
-        t[i] = filename
-        print(filename:sub(filename:len() - (ret), filename:len()))
+        t[i] = filename:sub(filename:len() - (ret), filename:len()-4)
+        --print(filename:sub(filename:len() - (ret), filename:len()-4))
       end
-
-      --print(filename)
   end
   pfile:close()
-  return t
+  return t, i
 end
 
---local current_dir=io.popen"cd":read'*l'
---print(current_dir)
+local current_dir=io.popen"cd":read'*l'
 
---local lstFile = scandir(current_dir .. "\\element\\logic")
+local lstFile, nbFile = scandir(current_dir .. "\\element\\logic")
 
 
---[[
-addFunc(nil)
-addFunc("elementDraw")
-addFunc("stickmanUpdate")
-addFunc("tileDraw")
-addFunc("tileDraw2")]]
+for nb = 0, nbFile do
+  addFunc(lstFile[nb])
+end
