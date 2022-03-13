@@ -1,10 +1,10 @@
 
-local element = {}
+Element = {}
 
 local rect = require("../rectangle")
 local color = require("../color")
 
-element.game_true_create_do_not_use = function (index)
+Element.game_true_create_do_not_use = function (index)
   return { isUsed = false, index = index}
 end
 
@@ -12,7 +12,7 @@ end
     
 --end
 
-function element:reset() 
+function Element:reset() 
   for k, v in pairs(self) do
     if(k ~= "index" and k ~= "isUsed") then
       self[k] = nil
@@ -25,7 +25,7 @@ function element:reset()
   self.draw   = nil
 end
 
-function element:setMethod(update, draw)
+function Element:setMethod(update, draw)
   if(self ~= nil) then
     self.update = update
     self.draw = draw
@@ -43,4 +43,4 @@ function element:draw()
   end
 end]]
 
-return element
+return Element
