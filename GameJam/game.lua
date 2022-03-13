@@ -4,6 +4,8 @@ local rect = require("rectangle")
 local sprite = require("sprite")
 require("gameFunc")
 
+local game_bg = love.graphics.newImage("Content/grass.png")
+
 game.load = function()
   game.elementBuilder = require("element.element")
   game.elements = {}
@@ -37,6 +39,11 @@ game.update = function(dt)
     local e = game.elements[i]
     if(e.isUsed and e.update ~= nil) then
       e.update(e)
+      if(e.mid == MID) then
+        local coef = 0.9
+        --game.camX = game.camX*coef+e.hitbox.x*(1-coef)
+        --game.camY = game.camY*coef+e.hitbox.y*(1-coef)
+      end
     end
   end
   --[[
@@ -95,8 +102,31 @@ end
 game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
-  love.graphics.scale(WIDTH/12)
+  local nbTileY = 8
+  local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
+  love.graphics.scale(HEIGHT/nbTileY)
   love.graphics.translate(game.camX, game.camY)
+
+  --[[
+  local tileXMin  = game.camX-tileSize
+  local tileYMin = game.camY-tileSize
+  local tileXMax = tileXMin+math.floor(tileSize+2)
+  local tileYMax = tileYMin+math.floor(tileSize+2)
+]]
+  local xMod = game.camX % 1
+  local yMod = game.camY % 1
+
+  for x = -1, nbTileX do
+    for y = -1, nbTileY do
+      love.graphics.draw(game_bg, x+xMod, y+yMod, 0, 1/128, 1/128)
+    end
+  end
+  --[[
+  for x = tileXMin, tileXMax do
+    for y = tileYMin, tileYMax do
+      love.graphics.draw(game_bg, x, y, 0, 1/128, 1/128)
+    end
+  end]]
 
   for i = 1, game.MAX_ELEMENT do
     local e = game.elements[i]
@@ -111,6 +141,7 @@ game.draw = function()
   love.graphics.pop()
 
   love.graphics.print("Game", 10, 10, 0, FONT_BIG)
+  love.graphics.print("M pour dessiner", 10, HEIGHT-40, 0, FONT_BIG)
 
   --love.graphics.print("Font Big",    400, 200, 0, FONT_BIG)
   --love.graphics.print("Font Normal", 400, 300, 0, FONT_NORMAL)

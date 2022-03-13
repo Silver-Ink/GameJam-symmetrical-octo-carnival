@@ -20,7 +20,7 @@ local carte
 
 
 function love.load()
-  love.window.setTitle("<NOM DU JEU> (by Wile)")
+  love.window.setTitle("A La Carte (by 4 Pizz)")
   WIDTH  = 960 --love.graphics.getWidth()
   HEIGHT = 540 --love.graphics.getHeight()
   
