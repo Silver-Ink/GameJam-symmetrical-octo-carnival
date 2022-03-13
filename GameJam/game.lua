@@ -7,7 +7,7 @@ local sprite = require("sprite")
 require("gameFunc")
 require("element.element")
 
-Game.MAX_ELEMENT = 500
+Game.MAX_ELEMENT = 1500
 
 local game_bg = love.graphics.newImage("Content/grass.png")
 
