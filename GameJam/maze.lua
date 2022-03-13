@@ -288,8 +288,7 @@ function mazeGenerator.DigWallAt(row, column)
       if mazeGenerator.IsInsideBonusChestsArea(row,column) == true and mazeGenerator.grid[row][column] == "path" then 
         mazeGenerator.grid[row][column] = "bonusChest"
         count = count + 1
-        table.insert(chests_rows,row)
-        table.insert(chests_columns,column)
+        
       end
       
     end    
