@@ -1,4 +1,4 @@
-local game = {}
+Game = {}
 
 local rect = require("rectangle")
 local sprite = require("sprite")
@@ -6,43 +6,44 @@ require("gameFunc")
 
 local game_bg = love.graphics.newImage("Content/grass.png")
 
-game.load = function()
-  game.elementBuilder = require("element.element")
-  game.elements = {}
+Game.load = function()
+  Game.elementBuilder = require("element.element")
+  Game.elements = {}
 
-  game.MAX_ELEMENT = 1000
-  game.CREATE_ELEMENT_INDEX = 0
+  Game.MAX_ELEMENT = 1000
+  Game.CREATE_ELEMENT_INDEX = 0
 
-  game.camX = 0
-  game.camY = 0
+  Game.camX = 0
+  Game.camY = 0
 
-  for i = 1, game.MAX_ELEMENT do
-    game.elements[i] = game.elementBuilder.game_true_create_do_not_use(i)
+  for i = 1, Game.MAX_ELEMENT do
+    Game.elements[i] = Game.elementBuilder.game_true_create_do_not_use(i)
   end
 
-  for i = 1, game.MAX_ELEMENT do
-    game.elementBuilder.reset(game.elements[i])
+  for i = 1, Game.MAX_ELEMENT do
+    Game.elementBuilder.reset(Game.elements[i])
   end
 end
 
-game.initDefaultLevel = function ()
-  require("element.mapLoader").load(game)
+Game.initDefaultLevel = function ()
+  require("element.mapLoader").load(Game)
 end
 
-game.loadLocalPlayer = function()
-  require("element._loadStickman")(game, {x=3, y=3, mid = MID})
+Game.loadLocalPlayer = function()
+  require("element._loadStickman")(Game, {x=3, y=3, mid = MID})
 end
 
-game.update = function(dt)
+Game.update = function(dt)
 
-  for i = 1, game.MAX_ELEMENT do
-    local e = game.elements[i]
+  for i = 1, Game.MAX_ELEMENT do
+    local e = Game.elements[i]
     if(e.isUsed and e.update ~= nil) then
       e.update(e)
       if(e.mid == MID) then
         local coef = 0.9
-        --game.camX = game.camX*coef+e.hitbox.x*(1-coef)
-        --game.camY = game.camY*coef+e.hitbox.y*(1-coef)
+        local tx, ty = -e.hitbox.x-e.hitbox.w/2, -e.hitbox.y-e.hitbox.h/2
+        Game.camX = Game.camX*coef+tx*(1-coef)
+        Game.camY = Game.camY*coef+ty*(1-coef)
       end
     end
   end
@@ -64,8 +65,8 @@ game.update = function(dt)
 
 end
 
-game.create = function (initFunction, initArguments, updateFunction, drawFunction)
-  local e = game.create_empty_element()
+Game.create = function (initFunction, initArguments, updateFunction, drawFunction)
+  local e = Game.create_empty_element()
   if(e ~= nil) then
     if(initFunction ~= nil) then
       initFunction(e, initArguments)
@@ -76,60 +77,45 @@ game.create = function (initFunction, initArguments, updateFunction, drawFunctio
   return e
 end
 
-game.create_empty_element = function ()
+Game.create_empty_element = function ()
   local tentative = 0
   repeat
     tentative = tentative+1
-    game.CREATE_ELEMENT_INDEX = ((game.CREATE_ELEMENT_INDEX+1) % game.MAX_ELEMENT) + 1
-    if(tentative > game.MAX_ELEMENT*0.8) then
+    Game.CREATE_ELEMENT_INDEX = ((Game.CREATE_ELEMENT_INDEX+1) % Game.MAX_ELEMENT) + 1
+    if(tentative > Game.MAX_ELEMENT*0.8) then
       return nil
     end
-  until (game.elements[game.CREATE_ELEMENT_INDEX].isUsed == false)
+  until (Game.elements[Game.CREATE_ELEMENT_INDEX].isUsed == false)
 
-  game.elementBuilder.reset(game.elements[game.CREATE_ELEMENT_INDEX])
-  game.elements[game.CREATE_ELEMENT_INDEX].isUsed = true
-  return game.elements[game.CREATE_ELEMENT_INDEX]
+  Game.elementBuilder.reset(Game.elements[Game.CREATE_ELEMENT_INDEX])
+  Game.elements[Game.CREATE_ELEMENT_INDEX].isUsed = true
+  return Game.elements[Game.CREATE_ELEMENT_INDEX]
 end
 
-game.deleteAt = function (index)
-  game.elements[index].isUsed = false
+Game.deleteAt = function (index)
+  Game.elements[index].isUsed = false
 end
 
-game.delete = function(element)
-  game.deleteAt(element.index)
+Game.delete = function(element)
+  Game.deleteAt(element.index)
 end
 
-game.draw = function()
+Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
   local nbTileY = 8
   local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
   love.graphics.scale(HEIGHT/nbTileY)
-  love.graphics.translate(game.camX, game.camY)
-
-  --[[
-  local tileXMin  = game.camX-tileSize
-  local tileYMin = game.camY-tileSize
-  local tileXMax = tileXMin+math.floor(tileSize+2)
-  local tileYMax = tileYMin+math.floor(tileSize+2)
-]]
-  local xMod = game.camX % 1
-  local yMod = game.camY % 1
+  love.graphics.translate(Game.camX+nbTileX/2, Game.camY+nbTileY/2)
 
   for x = -1, nbTileX do
     for y = -1, nbTileY do
-      love.graphics.draw(game_bg, x+xMod, y+yMod, 0, 1/128, 1/128)
-    end
-  end
-  --[[
-  for x = tileXMin, tileXMax do
-    for y = tileYMin, tileYMax do
       love.graphics.draw(game_bg, x, y, 0, 1/128, 1/128)
     end
-  end]]
+  end
 
-  for i = 1, game.MAX_ELEMENT do
-    local e = game.elements[i]
+  for i = 1, Game.MAX_ELEMENT do
+    local e = Game.elements[i]
     if(e.isUsed and e.draw ~= nil) then
       e.draw(e)
       --print(e)
@@ -148,4 +134,4 @@ game.draw = function()
   --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 end
 
-return game
+return Game
