@@ -9,4 +9,5 @@ return function (elem, arg)
   elem.hitbox = rect.create(arg.x or 0, arg.y or 0, 1, 1)
   elem.sprite = sprite.create("Content/as.png")
   elem.type = "player"
+  elem.inventory = {}
 end
