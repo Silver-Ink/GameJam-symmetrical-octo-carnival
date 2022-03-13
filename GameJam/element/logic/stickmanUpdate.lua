@@ -1,6 +1,3 @@
-
-local elemClass = require("element.element")
-
 return function (elem)
 
   --print("mid"..elem.mid)
@@ -23,6 +20,6 @@ return function (elem)
     if love.keyboard.isDown("down") then
       yAdd = -1
     end
-
+    
   end
 end

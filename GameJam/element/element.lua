@@ -23,6 +23,7 @@ function Element:reset()
   self.sprite = nil
   self.update = nil
   self.draw   = nil
+  self.type = "tile"
 end
 
 function Element:setMethod(update, draw)
