@@ -14,7 +14,6 @@ return function(elem)
   if e == nil then return end
   if love.keyboard.isDown("space") then
     
-    print("crafting")
     local count = 0
     for i = 1, #e.inventory do
       local item = e.inventory[i]
@@ -24,7 +23,6 @@ return function(elem)
     end
 
     if (count >= nbOfKey) then
-      print(#e.inventory)
       for i = #e.inventory, 1, -1 do
         local item = e.inventory[i]
         if (item.type == "key" and count > 0) then
