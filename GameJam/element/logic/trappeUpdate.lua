@@ -10,7 +10,15 @@ return function (elem)
       if(e.isUsed and e.type == "player" and Distance(e.hitbox.x+e.hitbox.w/2, e.hitbox.y+e.hitbox.h/2, elem.hitbox.x+elem.hitbox.w/2, elem.hitbox.y+elem.hitbox.h/2) <= 3) then
         elem.tempsDessus = elem.tempsDessus+1
         --print("trap opening..."..elem.tempsDessus)
-        if(elem.tempsDessus >= 6*2) then
+        local hasKey = false
+        for j = #e.inventory, 1, -1 do
+          local item = e.inventory[j]
+          if item.type == "superKey" then
+            hasKey = true
+            break
+          end
+        end
+        if(hasKey and elem.tempsDessus >= 6*2) then
           elem.update = nil
           elem.sprite = require("sprite").create("Content/trape_open.png")
         end
