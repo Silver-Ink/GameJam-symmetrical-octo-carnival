@@ -22,10 +22,12 @@ local mouse  = require("mouse")
 -- INSTANCES
 local carte
 
+USE_MAP=  false
 
+_OLD_KEY_M_PRESS = false
 
 function love.load()
-  love.window.setTitle("A La Carte (by 4 Pizz)")
+  love.window.setTitle("A La Carte (by 4 Pizz 2)")
   WIDTH  = 960 --love.graphics.getWidth()
   HEIGHT = 540 --love.graphics.getHeight()
   
@@ -49,9 +51,9 @@ function love.update(dt)
     reseau.listenServ()
   end
 
-  if love.keyboard.isDown("m") then
-    Ccarte.Update(carte)
-  end
+  Ccarte.Update(carte)
+
+
 
   --print("dt : "..dt)
   --table.insert(t, 1)
@@ -71,10 +73,18 @@ function love.draw()
   --love.graphics.print("Font Small",  400, 400, 0, FONT_SMALL)
 
   SCENE.draw()
+  
+  local mPress = love.keyboard.isDown("m")
+  if mPress and _OLD_KEY_M_PRESS == false  then
+    USE_MAP = not USE_MAP
+  end
+  _OLD_KEY_M_PRESS = mPress
 
-  if love.keyboard.isDown("m") then
-      Ccarte.Draw(carte)
-    end
+
+  if(USE_MAP) then
+    Ccarte.Draw(carte)
+  end
+  
 end
 
 function love.keypressed(key, scancode, isrepeat)

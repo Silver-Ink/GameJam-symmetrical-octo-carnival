@@ -1,31 +1,36 @@
 Game = {}
 
+TICK = 0
+
 local rect = require("rectangle")
 local sprite = require("sprite")
 require("gameFunc")
+require("element.element")
 
+local color = require("color")
 
-Game.MAX_ELEMENT = 1000
+Game.MAX_ELEMENT = 3000
+
 
 
 
 local game_bg = love.graphics.newImage("Content/grass.png")
 
 Game.load = function()
-  Game.elementBuilder = require("element.element")
   Game.elements = {}
 
   Game.CREATE_ELEMENT_INDEX = 0
 
   Game.camX = 0
   Game.camY = 0
+  TICK = 0
 
   for i = 1, Game.MAX_ELEMENT do
-    Game.elements[i] = Game.elementBuilder.game_true_create_do_not_use(i)
+    Game.elements[i] = Element.game_true_create_do_not_use(i)
   end
 
   for i = 1, Game.MAX_ELEMENT do
-    Game.elementBuilder.reset(Game.elements[i])
+    Element.reset(Game.elements[i])
   end
 
 end
@@ -40,6 +45,7 @@ end
 
 Game.update = function(dt)
 
+  TICK = TICK+1
   for i = 1, Game.MAX_ELEMENT do
     local e = Game.elements[i]
     if(e.isUsed and e.update ~= nil) then
@@ -88,13 +94,13 @@ Game.create_empty_element = function ()
   local tentative = 0
   repeat
     tentative = tentative+1
-    Game.CREATE_ELEMENT_INDEX = ((Game.CREATE_ELEMENT_INDEX+1) % Game.MAX_ELEMENT) + 1
+    Game.CREATE_ELEMENT_INDEX = ((Game.CREATE_ELEMENT_INDEX) % (Game.MAX_ELEMENT-1)) + 1
     if(tentative > Game.MAX_ELEMENT*0.8) then
       return nil
     end
   until (Game.elements[Game.CREATE_ELEMENT_INDEX].isUsed == false)
 
-  Game.elementBuilder.reset(Game.elements[Game.CREATE_ELEMENT_INDEX])
+  Element.reset(Game.elements[Game.CREATE_ELEMENT_INDEX])
   Game.elements[Game.CREATE_ELEMENT_INDEX].isUsed = true
   return Game.elements[Game.CREATE_ELEMENT_INDEX]
 end
@@ -107,17 +113,24 @@ Game.delete = function(element)
   Game.deleteAt(element.index)
 end
 
+function Constraint(val, min, max)
+  return math.max(math.min(val, max), min)
+end
+
 Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
-  local nbTileY = 8
+  local nbTileY = 12
   local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
   love.graphics.scale(HEIGHT/nbTileY)
-  love.graphics.translate(Game.camX+nbTileX/2, Game.camY+nbTileY/2)
+
+  local cX, cY = Game.camX+nbTileX/2, Game.camY+nbTileY/2
+  love.graphics.translate(cX, cY)
+  local addX, addY = math.ceil(cX), math.ceil(cY)
 
   for x = -1, nbTileX do
     for y = -1, nbTileY do
-      love.graphics.draw(game_bg, x, y, 0, 1/128, 1/128)
+      love.graphics.draw(game_bg, x-addX, y-addY, 0, 1/128, 1/128)
     end
   end
 
@@ -127,11 +140,15 @@ Game.draw = function()
       e.draw(e)
       --print(e)
       --print(e.id)
-      --game.elementBuilder.draw(e)
     end
   end
 
   love.graphics.pop()
+
+  local c = color.create(0,0,0, Constraint(math.sin(TICK/60*math.pi*2/30)*-0.75+0.25, 0, 1))
+  color.apply(c)
+  love.graphics.rectangle("fill", 0,0, WIDTH, HEIGHT)
+  color.apply(color.white)
 
   love.graphics.print("Game", 10, 10, 0, FONT_BIG)
   love.graphics.print("M pour dessiner", 10, HEIGHT-40, 0, FONT_BIG)
