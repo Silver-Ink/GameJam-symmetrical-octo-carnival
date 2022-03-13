@@ -6,8 +6,8 @@ local color = require("color")
 
 reseau.load = function()
   local w, h = 128, 96
-  reseau.b1 = button.create(rect.create(WIDTH/2+32,HEIGHT/2,w,h), color.create(1, 0, 0), "Host")
-  reseau.b2 = button.create(rect.create(WIDTH/2-32-w,HEIGHT/2,w,h), color.create(0, 1, 0), "Join") --"Join\nMathieu pour les fonctions on les\nstocks dans le tableau\ndans gameFunc.lua ?")
+  reseau.b1 = button.create(rect.create(WIDTH/2+32,HEIGHT/2,w,h), color.create(1, 0, 0), "Join")
+  reseau.b2 = button.create(rect.create(WIDTH/2-32-w,HEIGHT/2,w,h), color.create(0, 1, 0), "Host") --"Join\nMathieu pour les fonctions on les\nstocks dans le tableau\ndans gameFunc.lua ?")
   print("reseaux")
 end
 
@@ -19,7 +19,7 @@ local nbPlayer
 
 reseau.update = function(dt)
   if button.isPress(reseau.b1) then
-    Thread = love.thread.newThread("client.lua", "client")
+    Thread = love.thread.newThread("client.lua")
     --start the thread
     Thread:start()
     print("boutton b1")
@@ -73,9 +73,10 @@ reseau.searchNewPlayer = function()
   -- make sure we don't block waiting for this client's line
   lst_client[nbPlayer] = client
 
+  --GameFunc
 
   local c1 = {}
-  Thread = love.thread.newThread("serveurCom.lua", "servClient")
+  Thread = love.thread.newThread("serveurCom.lua")
   c1    = love.thread.newChannel()
   --start the thread
   c1:push({client, nbPlayer})
@@ -83,16 +84,6 @@ reseau.searchNewPlayer = function()
 
   nbPlayer = nbPlayer + 1
 
-
-
-
-
-
-
-
-
-  
-  
 
   nbPlayer = nbPlayer + 1
 
@@ -104,5 +95,21 @@ reseau.searchNewPlayer = function()
 
 
 end
+
+
+local function getFuncId(funcPtr)
+  if(funcPtr == nil) then
+    return 1
+  end
+  return GameFunc[funcPtr]
+end
+
+local function getFuncFromId(FuncId)
+  return GameFunc[FuncId]
+end
+
+
+
+
 
 return reseau
