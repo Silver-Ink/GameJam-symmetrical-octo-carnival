@@ -114,7 +114,7 @@ end
 Game.draw = function()
   --love.graphics.draw(ImgThomasDP)
   love.graphics.push()
-  local nbTileY = 12
+  local nbTileY = 60
   local nbTileX = math.ceil(love.graphics.getWidth()/love.graphics.getHeight()*nbTileY)
   love.graphics.scale(HEIGHT/nbTileY)
 
