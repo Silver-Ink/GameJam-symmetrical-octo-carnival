@@ -96,6 +96,7 @@ mapLoader.load = function (_)
         hasLeft = not(hasLeft)
         placeNonSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,tile,nil)
       end
+
       
       if mazeGenerator.grid[row][column] == "exit" then
         exitX = (column - mazeGenerator.numberOfColumns/2)
@@ -103,6 +104,14 @@ mapLoader.load = function (_)
         placeNonSolidBlock(exitX, exitY,"trape_close.png", require("element.logic.trappeUpdate"))
       end
     end
+
+    local updateCrafter = require("element/logic/craftorUpdate")
+    c = mazeGenerator.numberOfColumns/2
+    r = mazeGenerator.numberOfRows/2
+    placeNonSolidBlock(mazeGenerator.numberOfColumns/2-1 - c,mazeGenerator.numberOfRows/2-1 - r,"tl_craft.png", updateCrafter)
+    placeNonSolidBlock(mazeGenerator.numberOfColumns/2-1 - c,mazeGenerator.numberOfRows/2   - r,"bl_craft.png", updateCrafter)
+    placeNonSolidBlock(mazeGenerator.numberOfColumns/2   - c,mazeGenerator.numberOfRows/2-1 - r,"tr_craft.png", updateCrafter)
+    placeNonSolidBlock(mazeGenerator.numberOfColumns/2   - c,mazeGenerator.numberOfRows/2   - r,"br_craft.png", updateCrafter)
   
   end
 
