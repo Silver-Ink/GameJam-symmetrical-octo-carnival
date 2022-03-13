@@ -22,7 +22,4 @@ return function (elem, arg)
   elem.sprite = sprite.create("Content/as.png")
   elem.type = "player"
   elem.inventory = {}
-  AddKey(elem)
-  AddKey(elem)
-  
 end

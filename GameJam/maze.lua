@@ -29,6 +29,27 @@ local min_chests_avg_dist = 30
 
 
 
+function mazeGenerator.GenerateHoles(number)
+
+  local set = false
+  for i=1,number do
+    set = false
+    while not(set) do
+      local row = math.random(1,mazeGenerator.numberOfRows)
+      local column = math.random(1,mazeGenerator.numberOfColumns)
+
+      if row >= 2 and column >= 2 and row <= mazeGenerator.numberOfRows - 2 and column >= 2 and column <= mazeGenerator.numberOfColumns - 2  and (row ~= mazeGenerator.SpawningAreaTop and row ~= mazeGenerator.SpawningAreaTop + mazeGenerator.SpawningAreaSize) and (column ~= mazeGenerator.SpawningAreaLeft and column ~= mazeGenerator.SpawningAreaLeft + mazeGenerator.SpawningAreaSize) then
+        if mazeGenerator.grid[row ][column] == "wall"  then
+          if (mazeGenerator.grid[row-1][column] == "path" and mazeGenerator.grid[row+1][column] == "path") or (mazeGenerator.grid[row][column-1] == "path" and mazeGenerator.grid[row][column+1] == "path") then
+            mazeGenerator.DigWallAt(row,column)
+            set = true
+          end
+        end
+      end
+    end
+  end
+  
+end
 
 function mazeGenerator.DigWallAt(row, column)
     mazeGenerator.grid[row][column] = "path"
@@ -406,6 +427,7 @@ function mazeGenerator.Generate()
 
     mazeGenerator.GenerateBonusChest()
     mazeGenerator.GenerateRegularChests()
+    mazeGenerator.GenerateHoles(200)
 
 
     while (Calculate_chess_avg_dist() < min_chests_avg_dist) do

@@ -42,7 +42,13 @@ mapLoader.load = function (_)
   for row=1,mazeGenerator.numberOfRows do 
     for column=1,mazeGenerator.numberOfColumns do
       if mazeGenerator.grid[row][column] == "wall" then
-        placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2) 
+        if row <= 2 or row >= mazeGenerator.numberOfRows - 2 or column <= 2 or column >= mazeGenerator.numberOfColumns - 2 then
+          placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"wall.png")
+        elseif row == mazeGenerator.SpawningAreaTop or row == mazeGenerator.SpawningAreaTop + mazeGenerator.SpawningAreaSize or column == mazeGenerator.SpawningAreaLeft or column == mazeGenerator.SpawningAreaLeft + mazeGenerator.SpawningAreaSize then
+          placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2,"wall.png")
+        else
+          placeSolidBlock(column - mazeGenerator.numberOfColumns/2,row - mazeGenerator.numberOfRows/2) 
+        end
         hasLeft = false
       end
       if mazeGenerator.grid[row][column] == "chest1" then
@@ -95,7 +101,7 @@ mapLoader.load = function (_)
       if mazeGenerator.grid[row][column] == "exit" then
         exitX = (column - mazeGenerator.numberOfColumns/2)
         exitY = (row - mazeGenerator.numberOfRows/2)
-        placeNonSolidBlock(exitX, exitY,"trape_close.png")
+        placeNonSolidBlock(exitX, exitY,"trape_close.png", require("element.logic.trappeUpdate"))
       end
     end
 
@@ -111,9 +117,9 @@ mapLoader.load = function (_)
 
   local angle = math.random()*2*math.pi --math.atan(exitY, exitX)
   --print(angle)
-  for i = -4, 4 do
+  for i = -2, 2 do
     if(i ~= 0) then
-      placeNonSolidBlock(exitX+math.cos(angle)*i*-8, exitY+math.sin(angle)*i*-8, "eye.png")
+      placeNonSolidBlock(exitX+math.cos(angle)*i*8*(i*i/4), exitY+math.sin(angle)*i*8*(i*i/4), "eye.png")
     end
   end
 
