@@ -106,7 +106,7 @@ mapLoader.load = function (_)
     end
 
     local updateCrafter = require("element/logic/craftorUpdate")
-    c = mazeGenerator.numberOfColumns/2
+    c = mazeGenerator.numberOfColumns/2 + 0.5
     r = mazeGenerator.numberOfRows/2
     placeNonSolidBlock(mazeGenerator.numberOfColumns/2-1 - c,mazeGenerator.numberOfRows/2-1 - r,"tl_craft.png", updateCrafter)
     placeNonSolidBlock(mazeGenerator.numberOfColumns/2-1 - c,mazeGenerator.numberOfRows/2   - r,"bl_craft.png", updateCrafter)
