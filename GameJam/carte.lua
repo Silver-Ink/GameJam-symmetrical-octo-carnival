@@ -56,7 +56,7 @@ carte.Update = function(pCarte)
     for i = 1, Game.MAX_ELEMENT do
       local e = Game.elements[i]
       if(e.isUsed and e.type == "player" and e.mid == MID) then
-        print("test")
+        --print("test")
         carte.StrokePos(pCarte, 0.35, 0.35, 0.35, e.hitbox.x*Coef+WIDTH/2, e.hitbox.y*Coef+HEIGHT/2, e.hitbox.x*Coef+WIDTH/2, e.hitbox.y*Coef+HEIGHT/2, 4)
       end
     end
