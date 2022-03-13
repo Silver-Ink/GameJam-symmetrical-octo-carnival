@@ -8,9 +8,18 @@ mazeGenerator.exitBoundaryExtendFactor = 0.5
 mazeGenerator.SpawningAreaTop = 0
 mazeGenerator.SpawningAreaLeft = 0
 mazeGenerator.SpawningAreaSize = 4 * 3  --doit etre un multiple de 4
+mazeGenerator.bonusChestExtendFactor  = 0.6
+mazeGenerator.numberOfBonusChests = 2
+mazeGenerator.numberOfChests1 = 1
+mazeGenerator.numberOfChests2 = 1
+mazeGenerator.numberOfChests3 = 1
+mazeGenerator.numberOfChests4 = 1
+mazeGenerator.regularChestsExtendFactor = 0.8
+
 local explored = 0
 local seed = os.clock()
 local maxNumberOfTriesForDoorsBySide = 20
+
 
 
 
@@ -46,6 +55,18 @@ function mazeGenerator.DigWallAt(row, column)
   end
   
   
+  function mazeGenerator.IsInsideBonusChestsArea(row,column)
+    local rowTest = (row >= mazeGenerator.topBonusBoundary and row <= mazeGenerator.topBonusBoundary + mazeGenerator.bonusBoundarySize)
+    local columTest = (column >= mazeGenerator.leftBonusBoundary and column <= mazeGenerator.leftBonusBoundary + mazeGenerator.bonusBoundarySize)
+    return rowTest and columTest and not(mazeGenerator.IsInsideSpawningAreaExtended(row,column))
+  end 
+
+  function mazeGenerator.IsInsideRegularChestsArea(row,column)
+    local rowTest = (row >= mazeGenerator.topRegularChestBoundary and row <= mazeGenerator.topRegularChestBoundary + mazeGenerator.regularChestBoundarySize)
+    local columTest = (column >= mazeGenerator.leftRegularChestBoundary and column <= mazeGenerator.leftRegularChestBoundary + mazeGenerator.regularChestBoundarySize)
+    return rowTest and columTest and not(mazeGenerator.IsInsideSpawningAreaExtended(row,column))
+  end
+
   function mazeGenerator.GetAvailableDirections(row, column)
     local availableDirections = {}
     
@@ -111,6 +132,16 @@ function mazeGenerator.DigWallAt(row, column)
   
     return rowTest and columTest
   end
+
+  function mazeGenerator.IsInsideSpawningAreaExtended(row,column)
+    
+    local rowTest = (row >= mazeGenerator.SpawningAreaTop - 1 and row <= mazeGenerator.SpawningAreaTop + mazeGenerator.SpawningAreaSize + 1)
+    local columTest = (column >= mazeGenerator.SpawningAreaLeft - 1 and column <= mazeGenerator.SpawningAreaLeft + mazeGenerator.SpawningAreaSize + 1 )
+  
+    return rowTest and columTest
+  end
+
+  
   
   function mazeGenerator.GetRowIndex(x)
     return math.floor(x / mazeGenerator.cellSize)
@@ -165,7 +196,7 @@ function mazeGenerator.DigWallAt(row, column)
   
 
   function mazeGenerator.GenerateSpawningAreaDoorsToTheTop()
-    for i = 1, mazeGenerator.maxNumberOfTriesForDoorsBySide do
+    for i = 1, maxNumberOfTriesForDoorsBySide do
       local column = love.math.random(mazeGenerator.SpawningAreaLeft + 1, mazeGenerator.SpawningAreaLeft   + mazeGenerator.SpawningAreaSize - 1)
   
       local possible = true
@@ -185,7 +216,7 @@ function mazeGenerator.DigWallAt(row, column)
   
   
   function mazeGenerator.GenerateSpawningAreaDoorsToTheBottom()
-    for i = 1, mazeGenerator.maxNumberOfTriesForDoorsBySide do
+    for i = 1, maxNumberOfTriesForDoorsBySide do
       local column = love.math.random(mazeGenerator.SpawningAreaLeft + 1, mazeGenerator.SpawningAreaLeft   + mazeGenerator.SpawningAreaSize - 1)
   
       local possible = true
@@ -204,6 +235,72 @@ function mazeGenerator.DigWallAt(row, column)
     end
   end
   
+
+  function mazeGenerator.GenerateBonusChest()
+    local row = 0
+    local column = 0
+    local count = 0
+    
+    while count < mazeGenerator.numberOfBonusChests do
+     
+      row = math.random(1,mazeGenerator.numberOfRows)
+      column = math.random(1,mazeGenerator.numberOfColumns)
+      if mazeGenerator.IsInsideBonusChestsArea(row,column) == true and mazeGenerator.grid[row][column] == "path" then 
+        mazeGenerator.grid[row][column] = "bonusChest"
+        count = count + 1
+      end
+      
+    end    
+  end
+
+  function mazeGenerator.GenerateRegularChests()
+  
+    for i=1,mazeGenerator.numberOfChests1 do
+      local row = math.random(1,mazeGenerator.numberOfRows)
+      local column = math.random(1,mazeGenerator.numberOfColumns)
+      while mazeGenerator.grid[row][column] ~= "path" or mazeGenerator.IsInsideRegularChestsArea(row,column) == false   do
+        row = math.random(1,mazeGenerator.numberOfRows)
+        column = math.random(1,mazeGenerator.numberOfColumns)
+          
+      end
+      mazeGenerator.grid[row][column] = "chest1"
+    end
+
+    for i=1,mazeGenerator.numberOfChests2 do
+      local row = math.random(1,mazeGenerator.numberOfRows)
+      local column = math.random(1,mazeGenerator.numberOfColumns)
+      while mazeGenerator.grid[row][column] ~= "path" or mazeGenerator.IsInsideRegularChestsArea(row,column) == false do
+        row = math.random(1,mazeGenerator.numberOfRows)
+        column = math.random(1,mazeGenerator.numberOfColumns)
+          
+      end
+      mazeGenerator.grid[row][column] = "chest2"
+    end
+    
+    for i=1,mazeGenerator.numberOfChests3 do
+      local row = math.random(1,mazeGenerator.numberOfRows)
+      local column = math.random(1,mazeGenerator.numberOfColumns)
+      while mazeGenerator.grid[row][column] ~= "path" or mazeGenerator.IsInsideRegularChestsArea(row,column) == false do
+        row = math.random(1,mazeGenerator.numberOfRows)
+        column = math.random(1,mazeGenerator.numberOfColumns)
+          
+      end
+      mazeGenerator.grid[row][column] = "chest3"
+      
+    end
+
+    for i=1,mazeGenerator.numberOfChests4 do
+      local row = math.random(1,mazeGenerator.numberOfRows)
+      local column = math.random(1,mazeGenerator.numberOfColumns)
+      while mazeGenerator.grid[row][column] ~= "path" or mazeGenerator.IsInsideRegularChestsArea(row,column) == false do
+        row = math.random(1,mazeGenerator.numberOfRows)
+        column = math.random(1,mazeGenerator.numberOfColumns)
+          
+      end
+      mazeGenerator.grid[row][column] = "chest4"
+    end
+  end
+
   function mazeGenerator.GenerateSpawningAreaDoors()
     mazeGenerator.GenerateSpawningAreaDoorsToTheLeft()
     mazeGenerator.GenerateSpawningAreaDoorsToTheRight()
@@ -229,7 +326,9 @@ function mazeGenerator.DigWallAt(row, column)
   
   function mazeGenerator.Initialize(startingPointRow, startingPointColumn)
     --fixe la seed rnd
+    seed = seed + 1
     love.math.setRandomSeed(seed)
+    
     
     mazeGenerator.grid = {}
     explored = 0
@@ -245,6 +344,18 @@ function mazeGenerator.DigWallAt(row, column)
     mazeGenerator.leftExitBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * mazeGenerator.exitBoundaryExtendFactor
     mazeGenerator.exitBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *mazeGenerator.exitBoundaryExtendFactor)
     
+
+    --Generate bonusBoundary specificities
+    mazeGenerator.topBonusBoundary = mazeGenerator.SpawningAreaTop - mazeGenerator.SpawningAreaSize * mazeGenerator.bonusChestExtendFactor
+    mazeGenerator.leftBonusBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * mazeGenerator.bonusChestExtendFactor
+    mazeGenerator.bonusBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *mazeGenerator.bonusChestExtendFactor)
+
+    --Generate regularChestsBoundary specificities
+
+    mazeGenerator.topRegularChestBoundary = mazeGenerator.SpawningAreaTop - mazeGenerator.SpawningAreaSize * mazeGenerator.regularChestsExtendFactor
+    mazeGenerator.leftRegularChestBoundary = mazeGenerator.SpawningAreaLeft - mazeGenerator.SpawningAreaSize * mazeGenerator.regularChestsExtendFactor
+    mazeGenerator.regularChestBoundarySize = mazeGenerator.SpawningAreaSize * (1+2 *mazeGenerator.regularChestsExtendFactor)
+
     --fill the grid 
     mazeGenerator.InitGrid()
     
@@ -258,6 +369,8 @@ function mazeGenerator.Generate()
     mazeGenerator.Initialize(2,2)
     mazeGenerator.GenerateSpawningAreaDoors()
     mazeGenerator.GenerateExit() 
+    mazeGenerator.GenerateBonusChest()
+    mazeGenerator.GenerateRegularChests()
 end
 
 return mazeGenerator
