@@ -19,6 +19,10 @@ mazeGenerator.regularChestsExtendFactor = 0.8
 local explored = 0
 local seed = os.clock()
 local maxNumberOfTriesForDoorsBySide = 20
+local chests_rows = {}
+local chests_columns = {}
+
+local min_chests_avg_dist = 30
 
 
 
@@ -93,6 +97,17 @@ function mazeGenerator.DigWallAt(row, column)
     end
     
     return availableDirections
+  end
+
+  function Calculate_chess_avg_dist()
+    local sum = 0
+
+    for id1=1,#chests_rows do
+      for id2=id1,#chests_rows do
+        sum = sum + math.min(math.abs(chests_rows[id1] - chests_columns[id2]),math.abs(chests_columns[id1] - chests_rows[id2]))
+      end
+    end
+    return sum / #chests_rows
   end
   
   
@@ -248,6 +263,8 @@ function mazeGenerator.DigWallAt(row, column)
       if mazeGenerator.IsInsideBonusChestsArea(row,column) == true and mazeGenerator.grid[row][column] == "path" then 
         mazeGenerator.grid[row][column] = "bonusChest"
         count = count + 1
+        table.insert(chests_rows,row)
+        table.insert(chests_columns,column)
       end
       
     end    
@@ -261,9 +278,13 @@ function mazeGenerator.DigWallAt(row, column)
       while mazeGenerator.grid[row][column] ~= "path" or mazeGenerator.IsInsideRegularChestsArea(row,column) == false   do
         row = math.random(1,mazeGenerator.numberOfRows)
         column = math.random(1,mazeGenerator.numberOfColumns)
+
           
       end
+      
       mazeGenerator.grid[row][column] = "chest1"
+      table.insert(chests_rows,row)
+      table.insert(chests_columns,column)
     end
 
     for i=1,mazeGenerator.numberOfChests2 do
@@ -275,6 +296,8 @@ function mazeGenerator.DigWallAt(row, column)
           
       end
       mazeGenerator.grid[row][column] = "chest2"
+      table.insert(chests_rows,row)
+      table.insert(chests_columns,column)
     end
     
     for i=1,mazeGenerator.numberOfChests3 do
@@ -286,6 +309,8 @@ function mazeGenerator.DigWallAt(row, column)
           
       end
       mazeGenerator.grid[row][column] = "chest3"
+      table.insert(chests_rows,row)
+      table.insert(chests_columns,column)
       
     end
 
@@ -298,6 +323,8 @@ function mazeGenerator.DigWallAt(row, column)
           
       end
       mazeGenerator.grid[row][column] = "chest4"
+      table.insert(chests_rows,row)
+      table.insert(chests_columns,column)
     end
   end
 
@@ -326,9 +353,11 @@ function mazeGenerator.DigWallAt(row, column)
   
   function mazeGenerator.Initialize(startingPointRow, startingPointColumn)
     --fixe la seed rnd
-    seed = seed + 1
+    seed = os.clock()
     love.math.setRandomSeed(seed)
     
+    chests_columns = {}
+    chests_rows = {}
     
     mazeGenerator.grid = {}
     explored = 0
@@ -369,8 +398,14 @@ function mazeGenerator.Generate()
     mazeGenerator.Initialize(2,2)
     mazeGenerator.GenerateSpawningAreaDoors()
     mazeGenerator.GenerateExit() 
+
     mazeGenerator.GenerateBonusChest()
     mazeGenerator.GenerateRegularChests()
+
+
+    while (Calculate_chess_avg_dist() < min_chests_avg_dist) do
+      mazeGenerator.Generate()
+    end
 end
 
 return mazeGenerator
