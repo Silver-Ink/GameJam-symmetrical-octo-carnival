@@ -9,14 +9,14 @@ mazeGenerator.cellSize = 5 *3
 mazeGenerator.exitBoundaryExtendFactor = 0.5 
 mazeGenerator.SpawningAreaTop = 0
 mazeGenerator.SpawningAreaLeft = 0
-mazeGenerator.SpawningAreaSize = 4 * 2  --doit etre un multiple de 4
-mazeGenerator.bonusChestExtendFactor  = 0.8
+mazeGenerator.SpawningAreaSize = 4 * 2 --doit etre un multiple de 4
+mazeGenerator.bonusChestExtendFactor  = 0.6
 mazeGenerator.numberOfBonusChests = 2
 mazeGenerator.numberOfChests1 = 1
 mazeGenerator.numberOfChests2 = 1
 mazeGenerator.numberOfChests3 = 1
 mazeGenerator.numberOfChests4 = 1
-mazeGenerator.regularChestsExtendFactor = 1
+mazeGenerator.regularChestsExtendFactor = 2
 
 local explored = 0
 local seed = socket.gettime() * 1000
@@ -426,7 +426,7 @@ function mazeGenerator.Generate()
 
     mazeGenerator.GenerateBonusChest()
     mazeGenerator.GenerateRegularChests()
-    mazeGenerator.GenerateHoles(200)
+    mazeGenerator.GenerateHoles(100)
 
 
     while (Calculate_chess_avg_dist() < min_chests_avg_dist) do
